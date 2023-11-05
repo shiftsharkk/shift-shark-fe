@@ -1,0 +1,4 @@
+.calendar :global(.react-calendar__tile--active),
+.calendar :global(.react-calendar__tile--active):hover {
+  background-color: black;
+}
