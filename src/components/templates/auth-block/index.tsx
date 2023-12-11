@@ -17,24 +17,26 @@ const AuthBlock: React.FC<Props> = ({ type = "login" }) => {
   const [phone, setPhone] = useState("");
 
   return (
-    <div className="tw-grid tw-place-items-center | md:tw-px-4 md:tw-py-4 | tw-min-h-screen">
+    <div className="tw-grid tw-place-items-center | lg:tw-px-4 lg:tw-py-4 | tw-min-h-screen">
       <TwoSectionContainer
         leftChild={
-          <>
+          <div>
             <img
               src={logo}
               alt="shift shark logo"
               className="tw-absolute tw-top-6 tw-left-6"
             />
-            <h1 className="tw-font-bold tw-text-3xl">
-              {type === "login" ? "Welcome Back!" : "Hello there!"}
-            </h1>
-            <h2>Enter you phone number to continue</h2>
-          </>
+            <div className="tw-absolute lg:tw-relative tw-bottom-6 tw-left-6">
+              <h1 className="tw-font-bold tw-text-3xl">
+                {type === "login" ? "Welcome Back!" : "Hello there!"}
+              </h1>
+              <h2>Enter you phone number to continue</h2>
+            </div>
+          </div>
         }
         rightChild={
-          <>
-            <h3 className="tw-text-3xl tw-font-bold">
+          <div className="tw-w-full tw-h-full tw-flex tw-flex-col tw-items-center tw-justify-start lg:tw-justify-center">
+            <h3 className="tw-text-3xl tw-font-bold tw-text-left lg:tw-text-center tw-w-full">
               {type === "login" ? "Login" : "Register"}
             </h3>
             {!requestId ? (
@@ -62,7 +64,7 @@ const AuthBlock: React.FC<Props> = ({ type = "login" }) => {
                 </Link>
               </p>
             )}
-          </>
+          </div>
         }
       />
     </div>

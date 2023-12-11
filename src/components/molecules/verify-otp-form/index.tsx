@@ -1,4 +1,4 @@
-import {isAxiosError} from "axios";
+import { isAxiosError } from "axios";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -9,10 +9,7 @@ import Button from "../../atoms/button";
 
 import { verifyOTP } from "../../../api-calls/auth";
 
-import {
-  TVerifyOtpSchema,
-  verifyOtpSchema,
-} from "../../../validations/auth";
+import { TVerifyOtpSchema, verifyOtpSchema } from "../../../validations/auth";
 import { useNavigate } from "react-router-dom";
 
 type VerifyOtpFormProps = {
@@ -36,19 +33,22 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
     resolver: zodResolver(verifyOtpSchema),
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleAfterOtpVerification = (data: { newUser:boolean, requestToken: string} ) => {
-    console.log({data})
-    if(data.newUser){
-      navigate(`/onboarding?requestToken=${data.requestToken}`)
-      return
+  const handleAfterOtpVerification = (data: {
+    newUser: boolean;
+    requestToken: string;
+  }) => {
+    console.log({ data });
+    if (data.newUser) {
+      navigate(`/onboarding?requestToken=${data.requestToken}`);
+      return;
     }
     // [TODO]: handle login
-    localStorage.set('token', data.requestToken)
-    navigate('/dashboard')
-  }
-  
+    localStorage.set("token", data.requestToken);
+    navigate("/dashboard");
+  };
+
   const handleVerifyOtpSubmit = async (requestData: TVerifyOtpSchema) => {
     try {
       const responseData = await verifyOTP({
@@ -56,11 +56,11 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
         requestId,
       });
       toast.success("OTP verified successfully");
-      handleAfterOtpVerification(responseData.data)
+      handleAfterOtpVerification(responseData.data);
     } catch (error) {
-      let errorMessage = "OTP verification failed"
-      if(isAxiosError(error)){
-        errorMessage = error.response?.data.message ?? errorMessage
+      let errorMessage = "OTP verification failed";
+      if (isAxiosError(error)) {
+        errorMessage = error.response?.data.message ?? errorMessage;
       }
       toast.error(errorMessage);
     }
@@ -94,7 +94,10 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
       </form>
       <div className="tw-text-center tw-text-sm">
         OTP has been sent to <b>{phone}</b>.<br />
-        Want to <button onClick={() => setRequestId('')} className="tw-cursor-pointer"><b>change it?</b></button>
+        Want to{" "}
+        <button onClick={() => setRequestId("")} className="tw-cursor-pointer">
+          <b>change it?</b>
+        </button>
       </div>
     </>
   );

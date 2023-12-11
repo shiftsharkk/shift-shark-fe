@@ -65,5 +65,4 @@ const GetOtpForm: React.FC<GetOtpFormProps> = ({ setRequestId, setPhone }) => {
   );
 };
 
-
 export default GetOtpForm;
