@@ -36,7 +36,10 @@ const GetOtpForm: React.FC<GetOtpFormProps> = ({ setRequestId, setPhone }) => {
   };
 
   return (
-    <form className="tw-w-[320px]" onSubmit={handleSubmit(handleOtpSubmit)}>
+    <form
+      className="tw-w-full lg:tw-max-w-[320px]"
+      onSubmit={handleSubmit(handleOtpSubmit)}
+    >
       <div className="tw-flex">
         <Input
           {...register("phone")}
@@ -64,6 +67,5 @@ const GetOtpForm: React.FC<GetOtpFormProps> = ({ setRequestId, setPhone }) => {
     </form>
   );
 };
-
 
 export default GetOtpForm;

@@ -12,7 +12,18 @@ export type TInputProps = {
 >;
 
 const Input = forwardRef<HTMLInputElement, TInputProps>(
-  ({ type = "text", label, className, prefixElement, error, disabled, ...rest }, ref) => {
+  (
+    {
+      type = "text",
+      label,
+      className,
+      prefixElement,
+      error,
+      disabled,
+      ...rest
+    },
+    ref
+  ) => {
     return (
       <div className="tw-w-full">
         {label && (
@@ -33,7 +44,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
               {
                 ["tw-flex-1 tw-border-l-0 tw-rounded-l-none"]: !!prefixElement,
                 ["tw-w-full"]: !prefixElement,
-                ["tw-opacity-50 tw-cursor-not-allowed"]: disabled
+                ["tw-opacity-50 tw-cursor-not-allowed"]: disabled,
               },
               className
             )}
