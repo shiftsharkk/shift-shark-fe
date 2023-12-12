@@ -20,13 +20,13 @@ const AuthBlock: React.FC<Props> = ({ type = "login" }) => {
     <div className="tw-grid tw-place-items-center | lg:tw-px-4 lg:tw-py-4 | tw-min-h-screen">
       <TwoSectionContainer
         leftChild={
-          <div>
+          <div className="tw-flex tw-items-end lg:tw-items-center tw-w-full tw-h-full">
             <img
               src={logo}
               alt="shift shark logo"
               className="tw-absolute tw-top-6 tw-left-6"
             />
-            <div className="tw-absolute lg:tw-relative tw-bottom-6 tw-left-6">
+            <div className="tw-pb-10 lg:tw-pb-0">
               <h1 className="tw-font-bold tw-text-3xl">
                 {type === "login" ? "Welcome Back!" : "Hello there!"}
               </h1>
@@ -36,7 +36,7 @@ const AuthBlock: React.FC<Props> = ({ type = "login" }) => {
         }
         rightChild={
           <div className="tw-w-full tw-h-full tw-flex tw-flex-col tw-items-center tw-justify-start lg:tw-justify-center">
-            <h3 className="tw-text-3xl tw-font-bold tw-text-left lg:tw-text-center tw-w-full">
+            <h3 className="tw-text-3xl tw-font-bold tw-text-left lg:tw-text-center tw-w-full tw-pb-6">
               {type === "login" ? "Login" : "Register"}
             </h3>
             {!requestId ? (

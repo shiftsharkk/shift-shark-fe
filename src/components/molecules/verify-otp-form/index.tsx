@@ -69,7 +69,7 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
   return (
     <>
       <form
-        className="tw-w-[320px]"
+        className="tw-w-full lg:tw-max-w-[320px]"
         onSubmit={handleSubmit(handleVerifyOtpSubmit)}
       >
         <div className="tw-flex">
