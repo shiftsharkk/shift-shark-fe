@@ -92,7 +92,7 @@ const OnboardingSteps: React.FC = () => {
     <div className="tw-grid tw-place-items-center | tw-min-h-screen tw-min-w-full">
       <TwoSectionContainer
         leftChild={
-          <>
+          <div className="tw-flex tw-flex-col tw-w-full tw-h-full tw-min-h-[300px] tw-justify-end lg:tw-justify-center tw-items-start tw-pb-10 lg:tw-pb-0">
             <img
               src={logo}
               alt="shift shark logo"
@@ -105,14 +105,17 @@ const OnboardingSteps: React.FC = () => {
               steps={indicator}
               activeStep={getStepIndex(stepSlug ?? "")}
             />
-          </>
+          </div>
         }
         rightChild={
-          <div className="tw-flex tw-flex-col  | tw-max-w-[320px] tw-w-full">
+          <div className="tw-flex tw-flex-col  | lg:tw-max-w-[320px] tw-w-full">
             <h1 className="tw-flex tw-items-center | tw-text-2xl tw-font-bold | tw-mb-6">
               {steps[getStepIndex(stepSlug ?? "")].title}
               {steps[getStepIndex(stepSlug ?? "")].slug !== "basic-details" && (
-                <Link to="/login?intent=login" className="tw-ml-auto tw-text-xs tw-font-medium">
+                <Link
+                  to="/login?intent=login"
+                  className="tw-ml-auto tw-text-xs tw-font-medium"
+                >
                   Skip
                 </Link>
               )}
