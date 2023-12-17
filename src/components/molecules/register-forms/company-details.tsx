@@ -11,6 +11,7 @@ import {
   companyDetailsSchema,
 } from "../../../validations/profile";
 import { useState } from "react";
+import TextArea from "../../atoms/text-area";
 
 const CompanyDetailsForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -45,12 +46,13 @@ const CompanyDetailsForm = () => {
         error={errors.companyName?.message}
         {...register("companyName")}
       />
-      <Input
+      <TextArea
         label="Address"
-        placeholder="Address"
+        placeholder="Building No, Street Name,&#10;City,&#10;Pin Code"
         error={errors.address?.message}
         {...register("address")}
       />
+
       <div className="tw-flex tw-items-center">
         <label className="tw-text-sm tw-mr-2 | tw-block | tw-font-bold">
           Is it an NGO

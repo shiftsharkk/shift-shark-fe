@@ -36,7 +36,7 @@ const UserDetailsForm: React.FC = () => {
 
       // go to next step
       setSearchParams((params) => {
-        params.set("step", "banking-details");
+        params.set("step", "company-details");
         return params;
       });
     } catch (err) {
