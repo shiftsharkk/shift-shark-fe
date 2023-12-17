@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 
 import Input from "../../atoms/input-field";
@@ -61,14 +61,32 @@ const CompanyDetailsForm = () => {
         <Input
           label="GSTIN"
           placeholder="69420"
-          error={errors.gstin?.message}
+          error={
+            (
+              errors as FieldErrors<{
+                isNgo: false;
+                companyName: string;
+                address: string;
+                gstin: string;
+              }>
+            ).gstin?.message
+          }
           {...register("gstin")}
         />
       ) : (
         <Input
           label="Registration Number"
           placeholder="69420"
-          error={errors.registrationNumber?.message}
+          error={
+            (
+              errors as FieldErrors<{
+                isNgo: true;
+                companyName: string;
+                address: string;
+                registrationNumber: number;
+              }>
+            ).registrationNumber?.message
+          }
           {...register("registrationNumber")}
         />
       )}
