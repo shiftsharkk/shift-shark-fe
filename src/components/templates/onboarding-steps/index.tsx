@@ -106,6 +106,8 @@ const hirerIndicator: Omit<
   },
 ];
 
+const hideSkip = ["basic-details", "user-details", "company-details"];
+
 const OnboardingSteps: React.FC<{ type: "hirer" | "service-provider" }> = ({
   type,
 }) => {
@@ -157,7 +159,7 @@ const OnboardingSteps: React.FC<{ type: "hirer" | "service-provider" }> = ({
           <div className="tw-flex tw-flex-col  | lg:tw-max-w-[320px] tw-w-full">
             <h1 className="tw-flex tw-items-center | tw-text-2xl tw-font-bold | tw-mb-6">
               {steps[getStepIndex(stepSlug ?? "")].title}
-              {steps[getStepIndex(stepSlug ?? "")].slug !== "basic-details" && (
+              {!hideSkip.includes(steps[getStepIndex(stepSlug ?? "")].slug) && (
                 <Link
                   to="/login?intent=login"
                   className="tw-ml-auto tw-text-xs tw-font-medium"

@@ -12,13 +12,13 @@ const Onboarding: React.FC<{ type: "hirer" | "service-provider" }> = ({
 
   const requestToken = searchParams.get("requestToken");
 
-  // useEffect(() => {
-  //   if (!requestToken) {
-  //     toast.error("Please verify your phone number first");
-  //     navigate("/login?intent=login");
-  //     return;
-  //   }
-  // }, [requestToken, navigate]);
+  useEffect(() => {
+    if (!requestToken) {
+      toast.error("Please verify your phone number first");
+      navigate("/login?intent=login");
+      return;
+    }
+  }, [requestToken, navigate]);
 
   return <OnboardingSteps type={type} />;
 };
