@@ -11,7 +11,12 @@ const Routes = () => {
       <Route path="/" element={<Root />} />
       <Route path="/compo" element={<ComponentsTest />} />
       <Route path="/service-provider/login" element={<Login />} />
-      <Route path="/service-provider/onboarding" element={<Onboarding />} />
+      <Route path="/hirer/login" element={<Login />} />
+      <Route
+        path="/service-provider/onboarding"
+        element={<Onboarding type="service-provider" />}
+      />
+      <Route path="/hirer/onboarding" element={<Onboarding type="hirer" />} />
       <Route
         path="/service-provider/dashboard"
         element={<div>Dashboard</div>}
