@@ -19,7 +19,40 @@ export const personalDetailsSchema = z.object({
     }, "You should be at least 18 years old"),
 });
 
+export const userDetailsSchema = z.object({
+  name: z.string().min(6, "Name must be at least 6 characters long"),
+  email: z.string().email("Invalid email address").min(1, "Email is required"),
+  employeeId:z.string().min(6, "Employee id must be at least 6 characters long"),
+  designation: z.string().min(6, "Designation must be at least 6 characters long"),
+  
+});
+
+export const companyDetailsGstinSchema = z.object({
+  companyName:z.string().min(3, "Company name must be at least 3 characters long"),
+  address: z.string().min(15, "Address must be at least 15 characters long"),
+  isNgo:z.literal(false),
+  gstin:z.string().min(15, "GSTIN must be at least 15 characters long"),
+
+})
+
+export const companyDetailsRegNumSchema = z.object({
+  companyName:z.string().min(3, "Company name must be at least 3 characters long"),
+  address: z.string().min(15, "Address must be at least 15 characters long"),
+  isNgo:z.literal(true),
+  registrationNumber:z.number().min(1, "Registration number must be at least 1 digit")
+})
+
+export const companyDetailsSchema = z.discriminatedUnion('isNgo', [
+  companyDetailsGstinSchema,
+  companyDetailsRegNumSchema,
+]);
+
+
 export type TPersonalDetailsSchema = z.infer<typeof personalDetailsSchema>;
+
+export type TUserDetailsSchema = z.infer<typeof userDetailsSchema>
+
+export type TCompanyDetailsSchema = z.infer<typeof companyDetailsSchema>
 
 export const bankingDetailsSchema = z.object({
   accountNumber: z

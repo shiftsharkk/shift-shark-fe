@@ -7,6 +7,8 @@ import type { TFormStepIndicatorElement } from "../../atoms/form-step-indicator-
 import BasicDetailsForm from "../../molecules/register-forms/basic-details";
 import BankingDetailsForm from "../../molecules/register-forms/banking-details";
 import AdditionalDetailsForm from "../../molecules/register-forms/additional-details";
+import CompanyDetailsForm from "../../molecules/register-forms/company-details";
+import UserDetailsForm from "../../molecules/register-forms/user-details";
 import FormStepIndicator from "../../molecules/form-step-indicator";
 
 import logo from "../../../assets/logo.svg";
@@ -18,8 +20,10 @@ import UserBlackIcon from "../../../assets/icons/user-black.svg";
 import DollarSignWhiteIcon from "../../../assets/icons/dollar-sign-white.svg";
 import FileTextWhiteIcon from "../../../assets/icons/file-text-white.svg";
 import UserWhiteIcon from "../../../assets/icons/user-white.svg";
+import BriefcaseWhiteIcon from "../../../assets/icons/briefcase-white.svg";
+import BriefcaseBlackIcon from "../../../assets/icons/briefcase-black.svg";
 
-const steps = [
+const seviceProviderSteps = [
   {
     title: "Basic Details",
     component: <BasicDetailsForm />,
@@ -37,38 +41,82 @@ const steps = [
   },
 ];
 
-const indicator: Omit<TFormStepIndicatorElement, "active" | "showConnector">[] =
-  [
-    {
-      icon: {
-        active: UserBlackIcon,
-        inactive: UserWhiteIcon,
-      },
-      description: "Some personal details to know you better",
-      title: "Basic Details",
-    },
-    {
-      icon: {
-        active: DollarSignBlackIcon,
-        inactive: DollarSignWhiteIcon,
-      },
-      description: "Where do you like to cash in your hard earned money?",
-      title: "Bank Details",
-    },
-    {
-      icon: {
-        active: FileTextBlackIcon,
-        inactive: FileTextWhiteIcon,
-      },
-      description: "Some additional details to help us serve you better",
-      title: "Additional Details",
-    },
-  ];
+const hirerSteps = [
+  {
+    title: "User Details",
+    component: <UserDetailsForm />,
+    slug: "user-details",
+  },
+  {
+    title: "Company Details",
+    component: <CompanyDetailsForm />,
+    slug: "company-details",
+  },
+];
 
-const OnboardingSteps: React.FC = () => {
+const serviceProviderindicator: Omit<
+  TFormStepIndicatorElement,
+  "active" | "showConnector"
+>[] = [
+  {
+    icon: {
+      active: UserBlackIcon,
+      inactive: UserWhiteIcon,
+    },
+    description: "Some personal details to know you better",
+    title: "Basic Details",
+  },
+  {
+    icon: {
+      active: DollarSignBlackIcon,
+      inactive: DollarSignWhiteIcon,
+    },
+    description: "Where do you like to cash in your hard earned money?",
+    title: "Bank Details",
+  },
+  {
+    icon: {
+      active: FileTextBlackIcon,
+      inactive: FileTextWhiteIcon,
+    },
+    description: "Some additional details to help us serve you better",
+    title: "Additional Details",
+  },
+];
+
+const hirerIndicator: Omit<
+  TFormStepIndicatorElement,
+  "active" | "showConnector"
+>[] = [
+  {
+    icon: {
+      active: UserBlackIcon,
+      inactive: UserWhiteIcon,
+    },
+    description: "Basic details of the employee creating the account",
+    title: "User Details",
+  },
+  {
+    icon: {
+      active: BriefcaseBlackIcon,
+      inactive: BriefcaseWhiteIcon,
+    },
+    description: "Basic identification details about the company",
+    title: "Company Details",
+  },
+];
+
+const hideSkip = ["basic-details", "user-details", "company-details"];
+
+const OnboardingSteps: React.FC<{ type: "hirer" | "service-provider" }> = ({
+  type,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const stepSlug = searchParams.get("step");
+  const indicator =
+    type === "hirer" ? hirerIndicator : serviceProviderindicator;
+  const steps = type === "hirer" ? hirerSteps : seviceProviderSteps;
 
   const getStepIndex = (slug: string) => {
     return steps.findIndex((step) => step.slug === slug);
@@ -84,7 +132,7 @@ const OnboardingSteps: React.FC = () => {
         { replace: true }
       );
     }
-  }, [setSearchParams, stepSlug]);
+  }, [setSearchParams, stepSlug, steps]);
 
   if (!stepSlug) return null;
 
@@ -92,7 +140,7 @@ const OnboardingSteps: React.FC = () => {
     <div className="tw-grid tw-place-items-center | tw-min-h-screen tw-min-w-full">
       <TwoSectionContainer
         leftChild={
-          <>
+          <div className="tw-flex tw-flex-col tw-w-full tw-h-full tw-min-h-[300px] tw-justify-end lg:tw-justify-center tw-items-start tw-pb-10 lg:tw-pb-0">
             <img
               src={logo}
               alt="shift shark logo"
@@ -105,14 +153,17 @@ const OnboardingSteps: React.FC = () => {
               steps={indicator}
               activeStep={getStepIndex(stepSlug ?? "")}
             />
-          </>
+          </div>
         }
         rightChild={
-          <div className="tw-flex tw-flex-col  | tw-max-w-[320px] tw-w-full">
+          <div className="tw-flex tw-flex-col  | lg:tw-max-w-[320px] tw-w-full">
             <h1 className="tw-flex tw-items-center | tw-text-2xl tw-font-bold | tw-mb-6">
               {steps[getStepIndex(stepSlug ?? "")].title}
-              {steps[getStepIndex(stepSlug ?? "")].slug !== "basic-details" && (
-                <Link to="/login?intent=login" className="tw-ml-auto tw-text-xs tw-font-medium">
+              {!hideSkip.includes(steps[getStepIndex(stepSlug ?? "")].slug) && (
+                <Link
+                  to="/login?intent=login"
+                  className="tw-ml-auto tw-text-xs tw-font-medium"
+                >
                   Skip
                 </Link>
               )}
