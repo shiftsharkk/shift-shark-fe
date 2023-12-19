@@ -10,7 +10,7 @@ import Button from "../../atoms/button";
 import { verifyOTP } from "../../../api-calls/auth";
 
 import { TVerifyOtpSchema, verifyOtpSchema } from "../../../validations/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 type VerifyOtpFormProps = {
   requestId: string;
@@ -35,13 +35,14 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
 
   const navigate = useNavigate();
 
+  const { role } = useParams();
+
   const handleAfterOtpVerification = (data: {
     newUser: boolean;
     requestToken: string;
   }) => {
-    console.log({ data });
     if (data.newUser) {
-      navigate(`/onboarding?requestToken=${data.requestToken}`);
+      navigate(`/${role}/onboarding?requestToken=${data.requestToken}`);
       return;
     }
     // [TODO]: handle login
@@ -69,7 +70,7 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
   return (
     <>
       <form
-        className="tw-w-full lg:tw-max-w-[320px]"
+        className="tw-w-full lg:tw-max-w-[320px] tw-mb-4"
         onSubmit={handleSubmit(handleVerifyOtpSubmit)}
       >
         <div className="tw-flex">

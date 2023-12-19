@@ -57,12 +57,14 @@ const AuthBlock: React.FC<Props> = ({ type = "login" }) => {
                 </Link>
               </p>
             ) : (
-              <p className="tw-text-sm">
-                Already have an account?{" "}
-                <Link className="tw-font-bold" to={"?intent=login"}>
-                  Login here
-                </Link>
-              </p>
+              !requestId && (
+                <p className="tw-text-sm">
+                  Already have an account?{" "}
+                  <Link className="tw-font-bold" to={"?intent=login"}>
+                    Login here
+                  </Link>
+                </p>
+              )
             )}
           </div>
         }

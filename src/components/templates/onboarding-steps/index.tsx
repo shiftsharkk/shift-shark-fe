@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
 import TwoSectionContainer from "../../atoms/two-sections-container";
@@ -23,7 +23,7 @@ import UserWhiteIcon from "../../../assets/icons/user-white.svg";
 import BriefcaseWhiteIcon from "../../../assets/icons/briefcase-white.svg";
 import BriefcaseBlackIcon from "../../../assets/icons/briefcase-black.svg";
 
-const seviceProviderSteps = [
+const serviceProviderSteps = [
   {
     title: "Basic Details",
     component: <BasicDetailsForm />,
@@ -54,7 +54,7 @@ const hirerSteps = [
   },
 ];
 
-const serviceProviderindicator: Omit<
+const serviceProviderIndicator: Omit<
   TFormStepIndicatorElement,
   "active" | "showConnector"
 >[] = [
@@ -114,9 +114,16 @@ const OnboardingSteps: React.FC<{ type: "hirer" | "service-provider" }> = ({
   const [searchParams, setSearchParams] = useSearchParams();
 
   const stepSlug = searchParams.get("step");
-  const indicator =
-    type === "hirer" ? hirerIndicator : serviceProviderindicator;
-  const steps = type === "hirer" ? hirerSteps : seviceProviderSteps;
+
+  const indicator = useMemo(
+    () => (type === "hirer" ? hirerIndicator : serviceProviderIndicator),
+    [type]
+  );
+
+  const steps = useMemo(
+    () => (type === "hirer" ? hirerSteps : serviceProviderSteps),
+    [type]
+  );
 
   const getStepIndex = (slug: string) => {
     return steps.findIndex((step) => step.slug === slug);
