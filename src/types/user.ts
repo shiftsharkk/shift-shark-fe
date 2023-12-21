@@ -1,4 +1,6 @@
-export type TRole = "hirer" | "service-provider" | "super-admin";
+import { USER_ROLES } from "../constants/roles";
+
+export type TRole = typeof USER_ROLES[number];
 
 export type TAdditionalUserData = {
   PAN: string;

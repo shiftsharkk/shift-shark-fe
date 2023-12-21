@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams } from "react-router-dom";
 
 import { TGetOtpSchema, getOtpSchema } from "../../../validations/auth";
 import { getOTP } from "../../../api-calls/auth";
@@ -7,6 +8,8 @@ import { getOTP } from "../../../api-calls/auth";
 import Input from "../../atoms/input-field";
 import Button from "../../atoms/button";
 import { toast } from "../../atoms/toast";
+
+import { TRole } from "../../../types/user";
 
 import indiaFlag from "../../../assets/icons/india-flag.svg";
 
@@ -24,9 +27,14 @@ const GetOtpForm: React.FC<GetOtpFormProps> = ({ setRequestId, setPhone }) => {
     resolver: zodResolver(getOtpSchema),
   });
 
+  const { role  } = useParams()
+
   const handleOtpSubmit = async (requestData: TGetOtpSchema) => {
     try {
-      const responseData = await getOTP(requestData.phone);
+      const responseData = await getOTP({
+        phone: requestData.phone,
+        source: role as TRole
+      });
       setRequestId(responseData.data.requestId);
       setPhone(requestData.phone);
       toast.success("OTP sent successfully");
@@ -60,7 +68,7 @@ const GetOtpForm: React.FC<GetOtpFormProps> = ({ setRequestId, setPhone }) => {
         block
         variant="primary"
         size="lg"
-        className="tw-mt-4"
+        className="tw-mt-4 tw-mb-3"
       >
         Get OTP
       </Button>

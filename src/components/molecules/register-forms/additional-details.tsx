@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -21,6 +21,8 @@ const AdditionalDetailsForm = () => {
   const [selectedStrengths, setSelectedStrengths] = useState<
     TSearchInputOption[]
   >([]);
+
+  const navigate = useNavigate();
 
   const requestToken = searchParams.get("requestToken") ?? "";
 
@@ -102,10 +104,7 @@ const AdditionalDetailsForm = () => {
           type="button"
           variant="secondary"
           onClick={() => {
-            setSearchParams((params) => {
-              params.set("step", "banking-details");
-              return params;
-            });
+            navigate(-1)
           }}
           disabled={isSubmitting}
         >

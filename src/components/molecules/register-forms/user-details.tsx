@@ -21,8 +21,6 @@ const UserDetailsForm: React.FC = () => {
 
   const {
     register,
-    getValues,
-    setValue,
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm<TUserDetailsSchema>({
@@ -31,9 +29,6 @@ const UserDetailsForm: React.FC = () => {
 
   const handleBasicDetailsSubmit = async (data: TUserDetailsSchema) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log({ data });
-
       // go to next step
       setSearchParams((params) => {
         params.set("step", "company-details");
@@ -78,8 +73,8 @@ const UserDetailsForm: React.FC = () => {
         label="Designation"
         {...register("designation")}
         error={errors.designation?.message}
+        placeholder="Manager"
       />
-
       <Button
         loading={isSubmitting}
         disabled={isSubmitting}

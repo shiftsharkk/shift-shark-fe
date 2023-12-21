@@ -1,5 +1,5 @@
 import { TApiResponse } from "../types/api";
-import { TAuthUser } from "../types/user";
+import { TAuthUser, TRole } from "../types/user";
 import axios from "./axios-instance";
 
 type TGetOtpResponse = {
@@ -8,8 +8,15 @@ type TGetOtpResponse = {
   };
 } & TApiResponse;
 
-export const getOTP = async (phone: string): Promise<TGetOtpResponse> => {
-  const response = await axios.post("/auth/sendOTP", { phone });
+type TGetOtpRequest = {
+  phone: string;
+  source: TRole;
+};
+
+export const getOTP = async (
+  data: TGetOtpRequest
+): Promise<TGetOtpResponse> => {
+  const response = await axios.post("/auth/sendOTP", data);
   return response.data;
 };
 
@@ -38,9 +45,9 @@ type TCreateUserRequest = {
     user: {
       name: string;
       dob: number;
-      gender: 'Male' | 'Female';
+      gender: "Male" | "Female";
       address: string;
-    }
+    };
   };
 };
 
@@ -49,8 +56,8 @@ export const createUser = async (
 ): Promise<TAuthUser> => {
   const response = await axios.post("/user/signup", data.userData, {
     headers: {
-      'x-request-token': `${data.requestToken}`,
+      "x-request-token": `${data.requestToken}`,
     },
   });
   return response.data;
-}
+};

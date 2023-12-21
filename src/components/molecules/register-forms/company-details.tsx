@@ -1,34 +1,39 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldErrors, useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FieldErrors, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
-import Input from "../../atoms/input-field";
-import Button from "../../atoms/button";
-import ToggleSwitch from "../../atoms/toggle-switch";
+import Input from '../../atoms/input-field';
+import Button from '../../atoms/button';
+import ToggleSwitch from '../../atoms/toggle-switch';
 
 import {
   TCompanyDetailsSchema,
   companyDetailsSchema,
-} from "../../../validations/profile";
-import { useState } from "react";
-import TextArea from "../../atoms/text-area";
+} from '../../../validations/profile';
+import TextArea from '../../atoms/text-area';
+import { useEffect, useState } from 'react';
 
 const CompanyDetailsForm = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [toggle, setToggle] = useState(false);
-
+  const [isNgo, setIsNgo] = useState(false);
   //   const requestToken = searchParams.get("requestToken") ?? "";
 
   const {
     register,
     formState: { errors, isSubmitting },
+    setValue,
     handleSubmit,
   } = useForm<TCompanyDetailsSchema>({
     defaultValues: {
-      isNgo: toggle,
+      isNgo,
     },
     resolver: zodResolver(companyDetailsSchema),
   });
+
+  useEffect(() => {
+    setValue('isNgo', isNgo);
+  }, [isNgo, setValue]);
+
+  const navigate = useNavigate();
 
   const handleBasicDetailsSubmit = async (data: TCompanyDetailsSchema) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -44,22 +49,22 @@ const CompanyDetailsForm = () => {
         label="Company Name"
         placeholder="XYZ"
         error={errors.companyName?.message}
-        {...register("companyName")}
+        {...register('companyName')}
       />
       <TextArea
         label="Address"
         placeholder="Building No, Street Name,&#10;City,&#10;Pin Code"
         error={errors.address?.message}
-        {...register("address")}
+        {...register('address')}
       />
 
       <div className="tw-flex tw-items-center">
         <label className="tw-text-sm tw-mr-2 | tw-block | tw-font-bold">
           Is it an NGO
         </label>
-        <ToggleSwitch toggle={toggle} setToggle={setToggle} size="md" />
+        <ToggleSwitch toggle={isNgo} setToggle={setIsNgo} size="sm" />
       </div>
-      {!toggle ? (
+      {!isNgo ? (
         <Input
           label="GSTIN"
           placeholder="69420"
@@ -73,7 +78,7 @@ const CompanyDetailsForm = () => {
               }>
             ).gstin?.message
           }
-          {...register("gstin")}
+          {...register('gstin')}
         />
       ) : (
         <Input
@@ -89,7 +94,7 @@ const CompanyDetailsForm = () => {
               }>
             ).registrationNumber?.message
           }
-          {...register("registrationNumber")}
+          {...register('registrationNumber')}
         />
       )}
 
@@ -100,10 +105,7 @@ const CompanyDetailsForm = () => {
           type="button"
           variant="secondary"
           onClick={() => {
-            setSearchParams((params) => {
-              params.set("step", "basic-details");
-              return params;
-            });
+            navigate(-1);
           }}
           disabled={isSubmitting}
         >

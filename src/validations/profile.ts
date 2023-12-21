@@ -22,9 +22,8 @@ export const personalDetailsSchema = z.object({
 export const userDetailsSchema = z.object({
   name: z.string().min(6, "Name must be at least 6 characters long"),
   email: z.string().email("Invalid email address").min(1, "Email is required"),
-  employeeId:z.string().min(6, "Employee id must be at least 6 characters long"),
-  designation: z.string().min(6, "Designation must be at least 6 characters long"),
-  
+  employeeId:z.string().min(1, "Employee id must be at least 6 characters long"),
+  designation: z.string().min(1, "Designation must be at least 6 characters long"),
 });
 
 export const companyDetailsGstinSchema = z.object({
@@ -39,7 +38,7 @@ export const companyDetailsRegNumSchema = z.object({
   companyName:z.string().min(3, "Company name must be at least 3 characters long"),
   address: z.string().min(15, "Address must be at least 15 characters long"),
   isNgo:z.literal(true),
-  registrationNumber:z.number().min(1, "Registration number must be at least 1 digit")
+  registrationNumber:z.string().min(1, "Registration number must be at least 1 digit")
 })
 
 export const companyDetailsSchema = z.discriminatedUnion('isNgo', [
