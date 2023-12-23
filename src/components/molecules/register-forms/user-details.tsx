@@ -14,7 +14,7 @@ import {
 import { useHirerSignupStore } from '../../../stores/hirer-signup.store';
 
 const UserDetailsForm: React.FC = () => {
-  const [, setSearchParams] = useSearchParams();
+  const [ , setSearchParams] = useSearchParams();
 
   const setUserDetails = useHirerSignupStore((state) => state.setUserDetails);
 
@@ -56,12 +56,6 @@ const UserDetailsForm: React.FC = () => {
         placeholder="John Doe"
         {...register('name')}
         error={errors.name?.message}
-      />
-      <Input
-        label="Email"
-        placeholder="john@gmail.com"
-        {...register('email')}
-        error={errors.email?.message}
       />
       <Input
         label="Employee Id"

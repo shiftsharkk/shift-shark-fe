@@ -40,7 +40,9 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
 
   const handleAfterOtpVerification = (data: TVerifyOtpResponse['data']) => {
     if (data.newUser) {
-      navigate(`/${role}/onboarding?requestToken=${data.requestToken}`);
+      const params = new URLSearchParams();
+      params.set('requestToken', data.requestToken);
+      navigate(`/${role}/onboarding?${params.toString()}`);
       return;
     }
 

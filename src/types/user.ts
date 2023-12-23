@@ -21,13 +21,12 @@ export type TServiceProviderBankDetails = {
 
 export type THirerUserDetails = {
   name: string;
-  email: string;
   employeeId: string;
   designation: string;
 };
 
 export type TCompanyDetails = {
-  companyName: string;
+  name: string;
   address: string;
   isNgo: boolean;
   gstin?: string;

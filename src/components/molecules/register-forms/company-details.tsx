@@ -20,7 +20,7 @@ import { isAxiosError } from 'axios';
 const CompanyDetailsForm = () => {
   const [isNgo, setIsNgo] = useState(false);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const requestToken = searchParams.get('requestToken') ?? '';
 
   const setCompanyDetails = useHirerSignupStore(
@@ -41,8 +41,16 @@ const CompanyDetailsForm = () => {
   });
 
   useEffect(() => {
+    if(!userDetails) {
+      toast.error('Please start over! Cannot find user details');
+      setSearchParams((params) => {
+        params.set('step', 'user-details');
+        return params;
+      });
+      return;
+    }
     setValue('isNgo', isNgo);
-  }, [isNgo, setValue]);
+  }, [isNgo, setSearchParams, setValue, userDetails]);
 
   const navigate = useNavigate();
 
@@ -53,13 +61,13 @@ const CompanyDetailsForm = () => {
       return;
     }
     const requestData = {
-      user: { ...userDetails, address: 'test' },
+      user: userDetails,
       companyDetails: data,
     };
 
     try {
       await createHirer({ data: requestData, requestToken });
-      navigate('/service-provider/auth?accountCreated=true');
+      navigate('/hirer/auth?accountCreated=true');
     } catch (err) {
       console.log(err);
       let errMessage =
@@ -83,8 +91,8 @@ const CompanyDetailsForm = () => {
       <Input
         label="Company Name"
         placeholder="XYZ inc."
-        error={errors.companyName?.message}
-        {...register('companyName')}
+        error={errors.name?.message}
+        {...register('name')}
       />
       <TextArea
         label="Address"

@@ -17,7 +17,7 @@ import MultiInputField from '../multi-input-field';
 import { SERVICE_PROVIDER_STRENGTHS } from '../../../constants/service-provider-strengths';
 
 const AdditionalDetailsForm = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [selectedStrengths, setSelectedStrengths] = useState<
     TSearchInputOption[]
   >([]);
