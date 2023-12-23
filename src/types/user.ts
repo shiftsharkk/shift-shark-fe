@@ -1,6 +1,6 @@
-import { USER_ROLES } from "../constants/roles";
+import { USER_ROLES } from '../constants/roles';
 
-export type TRole = typeof USER_ROLES[number];
+export type TRole = (typeof USER_ROLES)[number];
 
 export type TAdditionalServiceProviderData = {
   PAN: string;
@@ -24,7 +24,7 @@ export type THirerUserDetails = {
   email: string;
   employeeId: string;
   designation: string;
-}
+};
 
 export type TCompanyDetails = {
   companyName: string;
@@ -32,13 +32,13 @@ export type TCompanyDetails = {
   isNgo: boolean;
   gstin?: string;
   registrationNumber?: string;
-}
+};
 
 export type TAuthUser = {
   _id: string;
   name: string;
   dob: number;
-  gender: "Male" | "Female";
+  gender: 'Male' | 'Female';
   address: string;
   phone: string;
   verified: boolean;
@@ -47,14 +47,13 @@ export type TAuthUser = {
 };
 
 export type TServiceProviderAccount = TAuthUser & {
-  role: "service-provider";
+  role: 'service-provider';
   additionalData: TAdditionalServiceProviderData;
   bankDetails: TServiceProviderBankDetails;
 };
 
-
-export type THirerAccount= TAuthUser & {
-  role: "hirer";
+export type THirerAccount = TAuthUser & {
+  role: 'hirer';
   userDetails: THirerUserDetails;
   companyDetails: TCompanyDetails;
 };

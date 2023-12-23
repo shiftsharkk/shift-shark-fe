@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
-import Input from "../../atoms/input-field";
-import Button from "../../atoms/button";
-import TextArea from "../../atoms/text-area";
+import Input from '../../atoms/input-field';
+import Button from '../../atoms/button';
+import TextArea from '../../atoms/text-area';
 
-import { TSearchInputOption } from "../search-input";
+import { TSearchInputOption } from '../search-input';
 import {
   TAdditionalDetailsSchema,
   additionalDetailsSchema,
-} from "../../../validations/profile";
-import MultiInputField from "../multi-input-field";
+} from '../../../validations/profile';
+import MultiInputField from '../multi-input-field';
 
-import { SERVICE_PROVIDER_STRENGTHS } from "../../../constants/service-provider-strengths";
+import { SERVICE_PROVIDER_STRENGTHS } from '../../../constants/service-provider-strengths';
 
 const AdditionalDetailsForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,7 +24,7 @@ const AdditionalDetailsForm = () => {
 
   const navigate = useNavigate();
 
-  const requestToken = searchParams.get("requestToken") ?? "";
+  const requestToken = searchParams.get('requestToken') ?? '';
 
   const handleAdditionalDetailsSubmit = async (
     data: TAdditionalDetailsSchema
@@ -45,16 +45,16 @@ const AdditionalDetailsForm = () => {
 
   useEffect(() => {
     setValue(
-      "strengths",
+      'strengths',
       selectedStrengths.map((strength) => strength.value)
     );
-    if(selectedStrengths.length < 3 && selectedStrengths.length > 0) {
-      setError("strengths", {
-        message: "Please select 3 strengths",
+    if (selectedStrengths.length < 3 && selectedStrengths.length > 0) {
+      setError('strengths', {
+        message: 'Please select 3 strengths',
       });
     } else {
-      setError("strengths", {
-        message: "",
+      setError('strengths', {
+        message: '',
       });
     }
   }, [selectedStrengths, setValue, setError]);
@@ -67,19 +67,19 @@ const AdditionalDetailsForm = () => {
       <Input
         label="PAN"
         placeholder="ABCDE1234F"
-        {...register("PAN")}
+        {...register('PAN')}
         error={errors.PAN?.message}
       />
       <Input
         label="Aadhar Number"
         placeholder="123412341234"
-        {...register("aadharNumber")}
+        {...register('aadharNumber')}
         error={errors.aadharNumber?.message}
       />
       <Input
         label="School/College Name"
         placeholder="ABC University"
-        {...register("schoolName")}
+        {...register('schoolName')}
         error={errors.schoolName?.message}
       />
       <MultiInputField
@@ -94,7 +94,7 @@ const AdditionalDetailsForm = () => {
       <TextArea
         label="About Me"
         placeholder="Introduce yourself briefly (It's okay to brag a little)"
-        {...register("aboutMe")}
+        {...register('aboutMe')}
         error={errors.aboutMe?.message}
       />
       <div className="tw-flex tw-gap-4 | tw-mt-4">
@@ -104,7 +104,7 @@ const AdditionalDetailsForm = () => {
           type="button"
           variant="secondary"
           onClick={() => {
-            navigate(-1)
+            navigate(-1);
           }}
           disabled={isSubmitting}
         >

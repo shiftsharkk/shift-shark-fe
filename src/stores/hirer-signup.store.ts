@@ -1,7 +1,6 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
-import { TCompanyDetails, THirerUserDetails } from "../types/user";
-
+import { TCompanyDetails, THirerUserDetails } from '../types/user';
 
 type THirerSignupStoreData = {
   userDetails: THirerUserDetails | null;
@@ -13,11 +12,11 @@ type THirerSignupStoreActions = {
   setCompanyDetails: (companyDetails: TCompanyDetails) => void;
 };
 
-export const useHirerSignupStore = create<THirerSignupStoreData & THirerSignupStoreActions>(
-  (set) => ({
-    userDetails: null,
-    companyDetails: null,
-    setUserDetails: (userDetails) => set({ userDetails }),
-    setCompanyDetails: (companyDetails) => set({ companyDetails }),
-  })
-);
+export const useHirerSignupStore = create<
+  THirerSignupStoreData & THirerSignupStoreActions
+>((set) => ({
+  userDetails: null,
+  companyDetails: null,
+  setUserDetails: (userDetails) => set({ userDetails }),
+  setCompanyDetails: (companyDetails) => set({ companyDetails }),
+}));

@@ -1,9 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef, useState } from 'react';
 
-import Input, { TInputProps } from "../../atoms/input-field";
+import Input, { TInputProps } from '../../atoms/input-field';
 
-import useSearchOptions from "../../../utils/hooks/use-search-options";
-import useOnClickOutside from "../../../utils/hooks/use-on-click-outside";
+import useSearchOptions from '../../../utils/hooks/use-search-options';
+import useOnClickOutside from '../../../utils/hooks/use-on-click-outside';
 
 export type TSearchInputOption = {
   title: string;
@@ -15,7 +15,7 @@ type Props = {
   onSelect: (value: string) => void;
   label?: string;
   closeOnSelect?: boolean;
-} & Omit<TInputProps, "ref">;
+} & Omit<TInputProps, 'ref'>;
 
 const SearchInput: React.FC<Props> = ({
   options,
@@ -25,7 +25,7 @@ const SearchInput: React.FC<Props> = ({
   disabled,
   ...rest
 }) => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
 
   const optionsRef = useRef<HTMLDivElement>(null);
 
@@ -72,7 +72,7 @@ const SearchInput: React.FC<Props> = ({
               type="button"
               onClick={() => {
                 onSelect(option.value);
-                setInputValue('')
+                setInputValue('');
                 if (closeOnSelect) setIsOptionsVisible(false);
               }}
             >

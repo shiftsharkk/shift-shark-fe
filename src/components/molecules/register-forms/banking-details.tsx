@@ -1,19 +1,19 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 
-import Input from "../../atoms/input-field";
-import Button from "../../atoms/button";
+import Input from '../../atoms/input-field';
+import Button from '../../atoms/button';
 
 import {
   TBankingDetailsSchema,
   bankingDetailsSchema,
-} from "../../../validations/profile";
+} from '../../../validations/profile';
 
 const BankingDetailsForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const requestToken = searchParams.get("requestToken") ?? "";
+  const requestToken = searchParams.get('requestToken') ?? '';
 
   const {
     register,
@@ -37,25 +37,25 @@ const BankingDetailsForm = () => {
         label="Account Number"
         placeholder="000012345678901234"
         error={errors.accountNumber?.message}
-        {...register("accountNumber")}
+        {...register('accountNumber')}
       />
       <Input
         label="IFSC Code"
         placeholder="12003456789"
         error={errors.ifscCode?.message}
-        {...register("ifscCode")}
+        {...register('ifscCode')}
       />
       <Input
         label="Account Holder Name"
         placeholder="John Doe"
         error={errors.accountHolderName?.message}
-        {...register("accountHolderName")}
+        {...register('accountHolderName')}
       />
       <Input
         label="Bank Name"
         placeholder="HDFC"
         error={errors.bankName?.message}
-        {...register("bankName")}
+        {...register('bankName')}
       />
       <div className="tw-flex tw-gap-4 | tw-mt-4">
         <Button
@@ -65,7 +65,7 @@ const BankingDetailsForm = () => {
           variant="secondary"
           onClick={() => {
             setSearchParams((params) => {
-              params.set("step", "basic-details");
+              params.set('step', 'basic-details');
               return params;
             });
           }}

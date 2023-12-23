@@ -1,8 +1,8 @@
-import React, { ReactElement, forwardRef } from "react";
-import { tmsx } from "../../../utils/tmsx";
+import React, { ReactElement, forwardRef } from 'react';
+import { tmsx } from '../../../utils/tmsx';
 
 export type TInputProps = {
-  type?: "text" | "password";
+  type?: 'text' | 'password';
   label?: string;
   prefixElement?: ReactElement;
   error?: string;
@@ -14,7 +14,7 @@ export type TInputProps = {
 const Input = forwardRef<HTMLInputElement, TInputProps>(
   (
     {
-      type = "text",
+      type = 'text',
       label,
       className,
       prefixElement,
@@ -40,11 +40,11 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
           <input
             disabled={disabled}
             className={tmsx(
-              "tw-px-4 tw-py-3 | tw-bg-[#FAFAFA] | tw-rounded-lg | tw-border-[#e7e7e7] tw-border",
+              'tw-px-4 tw-py-3 | tw-bg-[#FAFAFA] | tw-rounded-lg | tw-border-[#e7e7e7] tw-border',
               {
-                ["tw-flex-1 tw-border-l-0 tw-rounded-l-none"]: !!prefixElement,
-                ["tw-w-full"]: !prefixElement,
-                ["tw-opacity-50 tw-cursor-not-allowed"]: disabled,
+                ['tw-flex-1 tw-border-l-0 tw-rounded-l-none']: !!prefixElement,
+                ['tw-w-full']: !prefixElement,
+                ['tw-opacity-50 tw-cursor-not-allowed']: disabled,
               },
               className
             )}

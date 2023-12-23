@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import { useEffect, useRef, useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
-import Input from "../../atoms/input-field";
+import Input from '../../atoms/input-field';
 
-import useOnClickOutside from "../../../utils/hooks/use-on-click-outside";
+import useOnClickOutside from '../../../utils/hooks/use-on-click-outside';
 
-import styles from "./styles.module.css";
+import styles from './styles.module.css';
 
 type Props = {
   value: Date;
@@ -51,7 +51,7 @@ const CalendarField: React.FC<Props> = ({
       {calendarVisible && (
         <div
           ref={calendarContainerRef}
-          className={"tw-fixed"}
+          className={'tw-fixed'}
           style={{
             width: inputRef.current?.getBoundingClientRect().width,
             left: inputRef.current?.getBoundingClientRect().x,

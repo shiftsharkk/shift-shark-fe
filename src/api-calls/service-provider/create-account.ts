@@ -1,6 +1,6 @@
-import axios from "../axios-instance";
+import axios from '../axios-instance';
 
-import { TServiceProviderAccount } from "../../types/user";
+import { TServiceProviderAccount } from '../../types/user';
 
 type TCreateServiceProviderRequest = {
   requestToken: string;
@@ -8,7 +8,7 @@ type TCreateServiceProviderRequest = {
     user: {
       name: string;
       dob: number;
-      gender: "Male" | "Female";
+      gender: 'Male' | 'Female';
       address: string;
     };
   };
@@ -17,9 +17,9 @@ type TCreateServiceProviderRequest = {
 export const createServiceProvider = async (
   data: TCreateServiceProviderRequest
 ): Promise<TServiceProviderAccount> => {
-  const response = await axios.post("/service-provider/signup", data.userData, {
+  const response = await axios.post('/service-provider/signup', data.userData, {
     headers: {
-      "x-request-token": `${data.requestToken}`,
+      'x-request-token': `${data.requestToken}`,
     },
   });
   return response.data;

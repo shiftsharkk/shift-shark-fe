@@ -18,7 +18,6 @@ export const updateBankDetails = async (
   return response.data;
 };
 
-
 type TUpdateAdditionalDetailsRequest = TAdditionalServiceProviderData;
 
 export const updateAdditionalDetails = async (

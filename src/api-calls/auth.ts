@@ -1,10 +1,10 @@
-import axios from "./axios-instance";
+import axios from './axios-instance';
 
-import { TApiResponse } from "../types/api";
+import { TApiResponse } from '../types/api';
 
 type TGetOtpResponse = {
   data: {
-    requestId: "string";
+    requestId: 'string';
   };
 } & TApiResponse;
 
@@ -23,7 +23,7 @@ type TGetOtpRequest = TGetOtpWithPhoneRequest | TGetOtpWithEmailRequest;
 export const getOTP = async (
   data: TGetOtpRequest
 ): Promise<TGetOtpResponse> => {
-  const response = await axios.post("/auth/sendOTP", data);
+  const response = await axios.post('/auth/sendOTP', data);
   return response.data;
 };
 
@@ -50,6 +50,6 @@ export type TVerifyOtpResponse = {
 export const verifyOTP = async (
   data: TVerifyOtpRequest
 ): Promise<TVerifyOtpResponse> => {
-  const response = await axios.post("/auth/verifyOTP", data);
+  const response = await axios.post('/auth/verifyOTP', data);
   return response.data;
 };

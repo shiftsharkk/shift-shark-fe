@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FieldErrors, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Input from '../../atoms/input-field';
 import Button from '../../atoms/button';
@@ -12,10 +12,21 @@ import {
 } from '../../../validations/profile';
 import TextArea from '../../atoms/text-area';
 import { useEffect, useState } from 'react';
+import { useHirerSignupStore } from '../../../stores/hirer-signup.store';
+import { createHirer } from '../../../api-calls/hirer/create-account';
+import { toast } from 'react-toastify';
+import { isAxiosError } from 'axios';
 
 const CompanyDetailsForm = () => {
   const [isNgo, setIsNgo] = useState(false);
-  //   const requestToken = searchParams.get("requestToken") ?? "";
+
+  const [searchParams] = useSearchParams();
+  const requestToken = searchParams.get('requestToken') ?? '';
+
+  const setCompanyDetails = useHirerSignupStore(
+    (state) => state.setCompanyDetails
+  );
+  const userDetails = useHirerSignupStore((state) => state.userDetails);
 
   const {
     register,
@@ -36,8 +47,32 @@ const CompanyDetailsForm = () => {
   const navigate = useNavigate();
 
   const handleBasicDetailsSubmit = async (data: TCompanyDetailsSchema) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log({ data });
+    setCompanyDetails(data);
+    if (!userDetails) {
+      toast.error('Please start over! Cannot find user details');
+      return;
+    }
+    const requestData = {
+      user: { ...userDetails, address: 'test' },
+      companyDetails: data,
+    };
+
+    try {
+      await createHirer({ data: requestData, requestToken });
+      navigate('/service-provider/auth?accountCreated=true');
+    } catch (err) {
+      console.log(err);
+      let errMessage =
+        'Something went wrong wile registering user. Please try again later.';
+      if (err instanceof Error) {
+        if (isAxiosError(err)) {
+          if (err.response?.data?.message) {
+            errMessage = err.response?.data?.message;
+          }
+        }
+      }
+      toast.error(errMessage);
+    }
   };
 
   return (

@@ -1,5 +1,5 @@
 export type TApiResponse<T = unknown> = {
-  success: boolean,
-  message: string,
-  data: T
-}
+  success: boolean;
+  message: string;
+  data: T;
+};
