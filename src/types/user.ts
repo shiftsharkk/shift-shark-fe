@@ -2,7 +2,7 @@ import { USER_ROLES } from "../constants/roles";
 
 export type TRole = typeof USER_ROLES[number];
 
-export type TAdditionalUserData = {
+export type TAdditionalServiceProviderData = {
   PAN: string;
   aadharNumber: string;
   photoURL: string;
@@ -12,12 +12,27 @@ export type TAdditionalUserData = {
   aboutMe: string;
 };
 
-export type TBankDetails = {
+export type TServiceProviderBankDetails = {
   accountNumber: string;
   ifscCode: string;
   bankName: string;
   accountHolderName: string;
 };
+
+export type THirerUserDetails = {
+  name: string;
+  email: string;
+  employeeId: string;
+  designation: string;
+}
+
+export type TCompanyDetails = {
+  companyName: string;
+  address: string;
+  isNgo: boolean;
+  gstin?: string;
+  registrationNumber?: string;
+}
 
 export type TAuthUser = {
   _id: string;
@@ -29,6 +44,17 @@ export type TAuthUser = {
   verified: boolean;
   onboardingCompleted: boolean;
   role: TRole;
-  additionalData?: TAdditionalUserData;
-  bankDetails?: TBankDetails;
+};
+
+export type TServiceProviderAccount = TAuthUser & {
+  role: "service-provider";
+  additionalData: TAdditionalServiceProviderData;
+  bankDetails: TServiceProviderBankDetails;
+};
+
+
+export type THirerAccount= TAuthUser & {
+  role: "hirer";
+  userDetails: THirerUserDetails;
+  companyDetails: TCompanyDetails;
 };

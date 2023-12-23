@@ -1,6 +1,6 @@
-import { TApiResponse } from "../types/api";
-import { TAuthUser, TRole } from "../types/user";
 import axios from "./axios-instance";
+
+import { TApiResponse } from "../types/api";
 
 type TGetOtpResponse = {
   data: {
@@ -8,10 +8,17 @@ type TGetOtpResponse = {
   };
 } & TApiResponse;
 
-type TGetOtpRequest = {
+type TGetOtpWithPhoneRequest = {
   phone: string;
-  source: TRole;
+  source: 'service-provider';
 };
+
+type TGetOtpWithEmailRequest = {
+  email: string;
+  source: 'hirer';
+};
+
+type TGetOtpRequest = TGetOtpWithPhoneRequest | TGetOtpWithEmailRequest;
 
 export const getOTP = async (
   data: TGetOtpRequest
@@ -25,39 +32,24 @@ type TVerifyOtpRequest = {
   otp: string;
 };
 
-type TVerifyOtpResponse = {
-  data: {
-    newUser: boolean;
-    requestToken: string;
-  };
+type TNewUserVerifyResponse = {
+  newUser: true;
+  requestToken: string;
+};
+
+type TExistingUserVerifyResponse = {
+  newUser: false;
+  accessToken: string;
+  refreshToken: string;
+};
+
+export type TVerifyOtpResponse = {
+  data: TNewUserVerifyResponse | TExistingUserVerifyResponse;
 } & TApiResponse;
 
 export const verifyOTP = async (
   data: TVerifyOtpRequest
 ): Promise<TVerifyOtpResponse> => {
   const response = await axios.post("/auth/verifyOTP", data);
-  return response.data;
-};
-
-type TCreateUserRequest = {
-  requestToken: string;
-  userData: {
-    user: {
-      name: string;
-      dob: number;
-      gender: "Male" | "Female";
-      address: string;
-    };
-  };
-};
-
-export const createUser = async (
-  data: TCreateUserRequest
-): Promise<TAuthUser> => {
-  const response = await axios.post("/user/signup", data.userData, {
-    headers: {
-      "x-request-token": `${data.requestToken}`,
-    },
-  });
   return response.data;
 };

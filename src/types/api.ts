@@ -1,5 +1,5 @@
-export type TApiResponse = {
+export type TApiResponse<T = unknown> = {
   success: boolean,
   message: string,
-  data: unknown
+  data: T
 }

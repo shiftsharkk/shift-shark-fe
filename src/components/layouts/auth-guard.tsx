@@ -1,20 +1,17 @@
 import { useCallback, useEffect } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
 
-import { TAuthUser, TRole } from '@/types/index'
+import { TAuthUser } from '../../types/user'
 
-import { TDecodedToken } from '@/utils/authTokens'
+import { TDecodedToken, getAccessToken } from '../../utils/authTokens'
+
 import { useAuthStore } from '../../stores/auth.store'
 
-type Props = {
-  role: TRole
-}
 
-const AuthGuard:React.FC<Props> = ({
-  role
-}) => {
+const AuthGuard:React.FC = () => {
   const navigate = useNavigate()
+  const { role } = useParams()
 
   const setUser = useAuthStore(state => state.setUser)
 
@@ -23,17 +20,21 @@ const AuthGuard:React.FC<Props> = ({
   },[setUser])
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
+    const token = getAccessToken()
     if (!token) {
-      navigate('/login?redirect=no-token')
-      return
-    }
-    const decodedToken: TDecodedToken = jwtDecode(token) as TDecodedToken
-    if (role && decodedToken.role !== role) {
-      navigate('/login?redirect=forbidden')
+      navigate(`/${role}/auth?redirect=no-token`)
       return
     }
 
+    const decodedToken: TDecodedToken = jwtDecode(token) as TDecodedToken
+    console.log({decodedToken})
+    if (role && decodedToken.role !== role) {
+      navigate(`/${role}/auth?redirect=forbidden`)
+      return
+    }
+
+    // [TODO] : handle token expiry
+    // [TODO] : update decoded token type. It ain't TAuthUser
     initAuthStore(decodedToken)
   }, [initAuthStore, navigate, role])
 

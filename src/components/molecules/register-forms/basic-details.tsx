@@ -11,7 +11,7 @@ import { toast } from "../../atoms/toast";
 
 import CalendarField from "../calendar-field";
 
-import { createUser } from "../../../api-calls/auth";
+import { createServiceProvider } from "../../../api-calls/service-provider/create-account";
 
 import {
   Genders,
@@ -39,7 +39,7 @@ const BasicDetailsForm: React.FC = () => {
 
   const handleBasicDetailsSubmit = async (data: TPersonalDetailsSchema) => {
     try {
-      await createUser({
+      await createServiceProvider({
         requestToken,
         userData: {
           user: {

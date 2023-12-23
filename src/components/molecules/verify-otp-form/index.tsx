@@ -1,4 +1,5 @@
 import { isAxiosError } from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -7,10 +8,10 @@ import Input from "../../atoms/input-field";
 import { toast } from "../../atoms/toast";
 import Button from "../../atoms/button";
 
-import { verifyOTP } from "../../../api-calls/auth";
-
+import { TVerifyOtpResponse, verifyOTP } from "../../../api-calls/auth";
 import { TVerifyOtpSchema, verifyOtpSchema } from "../../../validations/auth";
-import { useNavigate, useParams } from "react-router-dom";
+
+import { setAccessToken, setRefreshToken } from "../../../utils/authTokens";
 
 type VerifyOtpFormProps = {
   requestId: string;
@@ -37,17 +38,17 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
 
   const { role } = useParams();
 
-  const handleAfterOtpVerification = (data: {
-    newUser: boolean;
-    requestToken: string;
-  }) => {
+  const handleAfterOtpVerification = (data: TVerifyOtpResponse['data']) => {
     if (data.newUser) {
       navigate(`/${role}/onboarding?requestToken=${data.requestToken}`);
       return;
     }
-    // [TODO]: handle login
-    localStorage.set("token", data.requestToken);
-    navigate("/dashboard");
+    
+    // login user
+    setAccessToken(data.accessToken);
+    setRefreshToken(data.refreshToken);
+    navigate(`/${role}/dashboard`);
+    console.log('data', data)
   };
 
   const handleVerifyOtpSubmit = async (requestData: TVerifyOtpSchema) => {

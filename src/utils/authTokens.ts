@@ -1,5 +1,6 @@
-import { LOCAL_STORAGE_KEYS } from "@/constants/local-storage-keys"
-import { TAuthUser } from "@/types/index"
+import { LOCAL_STORAGE_KEYS } from "../constants/local-storage-keys"
+
+import { TAuthUser } from "../types/user"
 
 export type TDecodedToken = {
   iat: number

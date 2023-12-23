@@ -47,7 +47,7 @@ const CompanyDetailsForm = () => {
     >
       <Input
         label="Company Name"
-        placeholder="XYZ"
+        placeholder="XYZ inc."
         error={errors.companyName?.message}
         {...register('companyName')}
       />

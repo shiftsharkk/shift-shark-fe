@@ -1,127 +1,129 @@
-import React, { useEffect, useMemo } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import React, { useEffect, useMemo } from 'react';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 
-import TwoSectionContainer from "../../atoms/two-sections-container";
-import type { TFormStepIndicatorElement } from "../../atoms/form-step-indicator-element";
+import TwoSectionContainer from '../../atoms/two-sections-container';
+import type { TFormStepIndicatorElement } from '../../atoms/form-step-indicator-element';
 
-import BasicDetailsForm from "../../molecules/register-forms/basic-details";
-import BankingDetailsForm from "../../molecules/register-forms/banking-details";
-import AdditionalDetailsForm from "../../molecules/register-forms/additional-details";
-import CompanyDetailsForm from "../../molecules/register-forms/company-details";
-import UserDetailsForm from "../../molecules/register-forms/user-details";
-import FormStepIndicator from "../../molecules/form-step-indicator";
+import BasicDetailsForm from '../../molecules/register-forms/basic-details';
+import BankingDetailsForm from '../../molecules/register-forms/banking-details';
+import AdditionalDetailsForm from '../../molecules/register-forms/additional-details';
+import CompanyDetailsForm from '../../molecules/register-forms/company-details';
+import UserDetailsForm from '../../molecules/register-forms/user-details';
+import FormStepIndicator from '../../molecules/form-step-indicator';
 
-import logo from "../../../assets/logo.svg";
+import logo from '../../../assets/logo.svg';
 
-import DollarSignBlackIcon from "../../../assets/icons/dollar-sign-black.svg";
-import FileTextBlackIcon from "../../../assets/icons/file-text-black.svg";
-import UserBlackIcon from "../../../assets/icons/user-black.svg";
+import DollarSignBlackIcon from '../../../assets/icons/dollar-sign-black.svg';
+import FileTextBlackIcon from '../../../assets/icons/file-text-black.svg';
+import UserBlackIcon from '../../../assets/icons/user-black.svg';
 
-import DollarSignWhiteIcon from "../../../assets/icons/dollar-sign-white.svg";
-import FileTextWhiteIcon from "../../../assets/icons/file-text-white.svg";
-import UserWhiteIcon from "../../../assets/icons/user-white.svg";
-import BriefcaseWhiteIcon from "../../../assets/icons/briefcase-white.svg";
-import BriefcaseBlackIcon from "../../../assets/icons/briefcase-black.svg";
+import DollarSignWhiteIcon from '../../../assets/icons/dollar-sign-white.svg';
+import FileTextWhiteIcon from '../../../assets/icons/file-text-white.svg';
+import UserWhiteIcon from '../../../assets/icons/user-white.svg';
+import BriefcaseWhiteIcon from '../../../assets/icons/briefcase-white.svg';
+import BriefcaseBlackIcon from '../../../assets/icons/briefcase-black.svg';
 
 const serviceProviderSteps = [
   {
-    title: "Basic Details",
+    title: 'Basic Details',
     component: <BasicDetailsForm />,
-    slug: "basic-details",
+    slug: 'basic-details',
   },
   {
-    title: "Banking Details",
+    title: 'Banking Details',
     component: <BankingDetailsForm />,
-    slug: "banking-details",
+    slug: 'banking-details',
   },
   {
-    title: "Additional Details",
+    title: 'Additional Details',
     component: <AdditionalDetailsForm />,
-    slug: "additional-details",
+    slug: 'additional-details',
   },
 ];
 
 const hirerSteps = [
   {
-    title: "User Details",
+    title: 'User Details',
     component: <UserDetailsForm />,
-    slug: "user-details",
+    slug: 'user-details',
   },
   {
-    title: "Company Details",
+    title: 'Company Details',
     component: <CompanyDetailsForm />,
-    slug: "company-details",
+    slug: 'company-details',
   },
 ];
 
 const serviceProviderIndicator: Omit<
   TFormStepIndicatorElement,
-  "active" | "showConnector"
+  'active' | 'showConnector'
 >[] = [
   {
     icon: {
       active: UserBlackIcon,
       inactive: UserWhiteIcon,
     },
-    description: "Some personal details to know you better",
-    title: "Basic Details",
+    description: 'Some personal details to know you better',
+    title: 'Basic Details',
   },
   {
     icon: {
       active: DollarSignBlackIcon,
       inactive: DollarSignWhiteIcon,
     },
-    description: "Where do you like to cash in your hard earned money?",
-    title: "Bank Details",
+    description: 'Where do you like to cash in your hard earned money?',
+    title: 'Bank Details',
   },
   {
     icon: {
       active: FileTextBlackIcon,
       inactive: FileTextWhiteIcon,
     },
-    description: "Some additional details to help us serve you better",
-    title: "Additional Details",
+    description: 'Some additional details to help us serve you better',
+    title: 'Additional Details',
   },
 ];
 
 const hirerIndicator: Omit<
   TFormStepIndicatorElement,
-  "active" | "showConnector"
+  'active' | 'showConnector'
 >[] = [
   {
     icon: {
       active: UserBlackIcon,
       inactive: UserWhiteIcon,
     },
-    description: "Basic details of the employee creating the account",
-    title: "User Details",
+    description: 'Basic details of the employee creating the account',
+    title: 'User Details',
   },
   {
     icon: {
       active: BriefcaseBlackIcon,
       inactive: BriefcaseWhiteIcon,
     },
-    description: "Basic identification details about the company",
-    title: "Company Details",
+    description: 'Basic identification details about the company',
+    title: 'Company Details',
   },
 ];
 
-const hideSkip = ["basic-details", "user-details", "company-details"];
+const hideSkip = ['basic-details', 'user-details', 'company-details'];
 
-const OnboardingSteps: React.FC<{ type: "hirer" | "service-provider" }> = ({
+const OnboardingSteps: React.FC<{ type: 'hirer' | 'service-provider' }> = ({
   type,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const stepSlug = searchParams.get("step");
+  const stepSlug = searchParams.get('step');
+
+  const { role } = useParams();
 
   const indicator = useMemo(
-    () => (type === "hirer" ? hirerIndicator : serviceProviderIndicator),
+    () => (type === 'hirer' ? hirerIndicator : serviceProviderIndicator),
     [type]
   );
 
   const steps = useMemo(
-    () => (type === "hirer" ? hirerSteps : serviceProviderSteps),
+    () => (type === 'hirer' ? hirerSteps : serviceProviderSteps),
     [type]
   );
 
@@ -133,7 +135,7 @@ const OnboardingSteps: React.FC<{ type: "hirer" | "service-provider" }> = ({
     if (!stepSlug) {
       setSearchParams(
         (params) => {
-          params.set("step", steps[0].slug);
+          params.set('step', steps[0].slug);
           return params;
         },
         { replace: true }
@@ -158,24 +160,24 @@ const OnboardingSteps: React.FC<{ type: "hirer" | "service-provider" }> = ({
             </p>
             <FormStepIndicator
               steps={indicator}
-              activeStep={getStepIndex(stepSlug ?? "")}
+              activeStep={getStepIndex(stepSlug ?? '')}
             />
           </div>
         }
         rightChild={
           <div className="tw-flex tw-flex-col  | lg:tw-max-w-[320px] tw-w-full">
             <h1 className="tw-flex tw-items-center | tw-text-2xl tw-font-bold | tw-mb-6">
-              {steps[getStepIndex(stepSlug ?? "")].title}
-              {!hideSkip.includes(steps[getStepIndex(stepSlug ?? "")].slug) && (
+              {steps[getStepIndex(stepSlug ?? '')].title}
+              {!hideSkip.includes(steps[getStepIndex(stepSlug ?? '')].slug) && (
                 <Link
-                  to="/login?intent=login"
+                  to={`/${role}/auth?intent=login`}
                   className="tw-ml-auto tw-text-xs tw-font-medium"
                 >
                   Skip
                 </Link>
               )}
             </h1>
-            {steps[getStepIndex(stepSlug ?? "")].component}
+            {steps[getStepIndex(stepSlug ?? '')].component}
           </div>
         }
       />
