@@ -44,7 +44,7 @@ const CompanyDetailsForm = () => {
   });
 
   useEffect(() => {
-    if(!userDetails) {
+    if (!userDetails) {
       toast.error('Please start over! Cannot find user details');
       setSearchParams((params) => {
         params.set('step', 'user-details');
@@ -73,7 +73,7 @@ const CompanyDetailsForm = () => {
       navigate('/hirer/auth?accountCreated=true');
     } catch (err) {
       console.log(err);
-      const message = parseError(err)
+      const message = parseError(err);
       toast.error(message);
     }
   };

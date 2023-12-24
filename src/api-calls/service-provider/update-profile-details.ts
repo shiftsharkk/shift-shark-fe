@@ -11,10 +11,7 @@ type TUpdateBankDetailsRequest = TServiceProviderBankDetails;
 export const updateBankDetails = async (
   data: TUpdateBankDetailsRequest
 ): Promise<TApiResponse> => {
-  const response = await axios.put(
-    '/service-provider/profile',
-    {bankDetails: data}
-  );
+  const response = await axios.put('/service-provider/bank-details', data);
   return response.data;
 };
 
@@ -24,8 +21,8 @@ export const updateAdditionalDetails = async (
   data: TUpdateAdditionalDetailsRequest
 ): Promise<TApiResponse> => {
   const response = await axios.put(
-    '/service-provider/profile',
-    {additionalDetails: data}
+    '/service-provider/additional-details',
+    data
   );
   return response.data;
 };

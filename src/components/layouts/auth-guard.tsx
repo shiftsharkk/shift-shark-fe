@@ -28,8 +28,8 @@ const AuthGuard: React.FC = () => {
       return;
     }
 
-    const decodedToken: TDecodedToken = jwtDecode(token) as TDecodedToken;
-    console.log({ decodedToken });
+    const decodedToken = jwtDecode(token) as TDecodedToken;
+
     if (role && decodedToken.role !== role) {
       navigate(`/${role}/auth?redirect=forbidden`);
       return;

@@ -28,11 +28,11 @@ const BankingDetailsForm = () => {
 
   const handleBankingDetailsSubmit = async (data: TBankingDetailsSchema) => {
     try {
-      await updateBankDetails(data)
+      await updateBankDetails(data);
     } catch (error) {
-      console.error({error})
-      const message = parseError(error)
-      toast(message)
+      console.error({ error });
+      const message = parseError(error);
+      toast(message);
     }
   };
 

@@ -2,6 +2,10 @@ import { USER_ROLES } from '../constants/roles';
 
 export type TRole = (typeof USER_ROLES)[number];
 
+export type TAuthUser = {
+  role: TRole;
+};
+
 export type TAdditionalServiceProviderData = {
   PAN: string;
   aadharNumber: string;
@@ -46,7 +50,7 @@ export type TServiceProviderBasicDetails = {
   onboardingCompleted: string;
   role: string;
   _id: string;
-}
+};
 
 export type TServiceProviderAccount = {
   user: TServiceProviderBasicDetails;

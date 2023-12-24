@@ -15,7 +15,7 @@ import {
 import { useHirerSignupStore } from '../../../../stores/hirer-signup.store';
 
 const UserDetailsForm: React.FC = () => {
-  const [ , setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   const setUserDetails = useHirerSignupStore((state) => state.setUserDetails);
 
