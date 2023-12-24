@@ -1,34 +1,61 @@
-import { USER_ROLES } from "../constants/roles";
+import { USER_ROLES } from '../constants/roles';
 
-export type TRole = typeof USER_ROLES[number];
+export type TRole = (typeof USER_ROLES)[number];
 
-export type TAdditionalUserData = {
+export type TAdditionalServiceProviderData = {
   PAN: string;
   aadharNumber: string;
-  photoURL: string;
+  photoURL?: string;
   skills: string[];
-  resume: string;
+  resume?: string;
   schoolName: string;
-  aboutMe: string;
+  aboutMe?: string;
 };
 
-export type TBankDetails = {
+export type TServiceProviderBankDetails = {
   accountNumber: string;
   ifscCode: string;
   bankName: string;
   accountHolderName: string;
 };
 
-export type TAuthUser = {
-  _id: string;
+export type THirerUserDetails = {
   name: string;
-  dob: number;
-  gender: "Male" | "Female";
+  employeeId: string;
+  designation: string;
+};
+
+export type TCompanyDetails = {
+  name: string;
   address: string;
+  isNgo: boolean;
+  gstin?: string;
+  registrationNumber?: string;
+};
+
+export type TServiceProviderBasicDetails = {
+  name: string;
+  email: string;
+  gender: string;
+  address: string;
+  dob: string;
   phone: string;
-  verified: boolean;
-  onboardingCompleted: boolean;
-  role: TRole;
-  additionalData?: TAdditionalUserData;
-  bankDetails?: TBankDetails;
+  createdAt: string;
+  updatedAt: string;
+  verified: string;
+  onboardingCompleted: string;
+  role: string;
+  _id: string;
+}
+
+export type TServiceProviderAccount = {
+  user: TServiceProviderBasicDetails;
+  additionalData: TAdditionalServiceProviderData;
+  bankDetails: TServiceProviderBankDetails;
+};
+
+export type THirerAccount = {
+  role: 'hirer';
+  userDetails: THirerUserDetails;
+  companyDetails: TCompanyDetails;
 };

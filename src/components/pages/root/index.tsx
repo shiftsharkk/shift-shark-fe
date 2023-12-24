@@ -1,9 +1,7 @@
-import {Navigate} from 'react-router-dom'
+import { Navigate } from 'react-router-dom';
 
 const Root = () => {
-  return (
-    <Navigate to="/auth?intent=login" />
-  )
-}
+  return <Navigate to="/service-provider/auth?intent=login" />;
+};
 
-export default Root
+export default Root;

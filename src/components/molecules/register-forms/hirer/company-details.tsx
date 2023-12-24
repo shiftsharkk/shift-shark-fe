@@ -1,21 +1,35 @@
+import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FieldErrors, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import Input from '../../atoms/input-field';
-import Button from '../../atoms/button';
-import ToggleSwitch from '../../atoms/toggle-switch';
+import Input from '../../../atoms/input-field';
+import Button from '../../../atoms/button';
+import TextArea from '../../../atoms/text-area';
+import ToggleSwitch from '../../../atoms/toggle-switch';
 
 import {
   TCompanyDetailsSchema,
   companyDetailsSchema,
-} from '../../../validations/profile';
-import TextArea from '../../atoms/text-area';
-import { useEffect, useState } from 'react';
+} from '../../../../validations/profile';
+
+import { useHirerSignupStore } from '../../../../stores/hirer-signup.store';
+
+import { createHirer } from '../../../../api-calls/hirer/create-account';
+
+import { parseError } from '../../../../utils/parse-error';
 
 const CompanyDetailsForm = () => {
   const [isNgo, setIsNgo] = useState(false);
-  //   const requestToken = searchParams.get("requestToken") ?? "";
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const requestToken = searchParams.get('requestToken') ?? '';
+
+  const setCompanyDetails = useHirerSignupStore(
+    (state) => state.setCompanyDetails
+  );
+  const userDetails = useHirerSignupStore((state) => state.userDetails);
 
   const {
     register,
@@ -30,14 +44,38 @@ const CompanyDetailsForm = () => {
   });
 
   useEffect(() => {
+    if(!userDetails) {
+      toast.error('Please start over! Cannot find user details');
+      setSearchParams((params) => {
+        params.set('step', 'user-details');
+        return params;
+      });
+      return;
+    }
     setValue('isNgo', isNgo);
-  }, [isNgo, setValue]);
+  }, [isNgo, setSearchParams, setValue, userDetails]);
 
   const navigate = useNavigate();
 
   const handleBasicDetailsSubmit = async (data: TCompanyDetailsSchema) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log({ data });
+    setCompanyDetails(data);
+    if (!userDetails) {
+      toast.error('Please start over! Cannot find user details');
+      return;
+    }
+    const requestData = {
+      user: userDetails,
+      companyDetails: data,
+    };
+
+    try {
+      await createHirer({ data: requestData, requestToken });
+      navigate('/hirer/auth?accountCreated=true');
+    } catch (err) {
+      console.log(err);
+      const message = parseError(err)
+      toast.error(message);
+    }
   };
 
   return (
@@ -47,9 +85,9 @@ const CompanyDetailsForm = () => {
     >
       <Input
         label="Company Name"
-        placeholder="XYZ"
-        error={errors.companyName?.message}
-        {...register('companyName')}
+        placeholder="XYZ inc."
+        error={errors.name?.message}
+        {...register('name')}
       />
       <TextArea
         label="Address"

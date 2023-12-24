@@ -1,10 +1,10 @@
-import {BrowserRouter} from 'react-router-dom'
-import {ToastContainer} from 'react-toastify'
+import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
-import './App.css'
+import './App.css';
 
-import Routes from './routes'
+import Routes from './routes';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <Routes />
       <ToastContainer />
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

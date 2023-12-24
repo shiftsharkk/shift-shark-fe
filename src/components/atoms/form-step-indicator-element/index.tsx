@@ -1,4 +1,4 @@
-import { tmsx } from "../../../utils/tmsx";
+import { tmsx } from '../../../utils/tmsx';
 
 export type TFormStepIndicatorElement = {
   icon: {
@@ -23,9 +23,9 @@ const FormStepIndicatorElement: React.FC<TFormStepIndicatorElement> = ({
       <div className="tw-flex tw-gap-2 tw-items-center">
         <div
           className={tmsx(
-            "tw-p-2 | tw-rounded-full | tw-border-white tw-border",
+            'tw-p-2 | tw-rounded-full | tw-border-white tw-border',
             {
-              ["tw-bg-white"]: active,
+              ['tw-bg-white']: active,
             }
           )}
         >

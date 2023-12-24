@@ -1,10 +1,10 @@
-import { useMemo } from "react";
-import { tmsx } from "../../../utils/tmsx";
+import { useMemo } from 'react';
+import { tmsx } from '../../../utils/tmsx';
 
-import Tag from "../../atoms/tag/inex";
-import { TInputProps } from "../../atoms/input-field";
+import Tag from '../../atoms/tag/inex';
+import { TInputProps } from '../../atoms/input-field';
 
-import SearchInput, { TSearchInputOption } from "../search-input";
+import SearchInput, { TSearchInputOption } from '../search-input';
 
 type Props = {
   options: TSearchInputOption[];
@@ -14,7 +14,7 @@ type Props = {
   >;
   label?: string;
   maxSelections?: number;
-} & Omit<TInputProps, "ref" | "onSelect">;
+} & Omit<TInputProps, 'ref' | 'onSelect'>;
 
 const MultiInputField: React.FC<Props> = ({
   options,
@@ -53,7 +53,11 @@ const MultiInputField: React.FC<Props> = ({
             ) as TSearchInputOption,
           ]);
         }}
-        disabled={maxSelections? (selectedOptions.length >= maxSelections || disabled ) : disabled}
+        disabled={
+          maxSelections
+            ? selectedOptions.length >= maxSelections || disabled
+            : disabled
+        }
         {...rest}
       />
 

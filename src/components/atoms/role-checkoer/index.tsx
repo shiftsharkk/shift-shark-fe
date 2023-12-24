@@ -1,6 +1,6 @@
-import { Navigate, Outlet, useParams } from "react-router-dom";
-import { USER_ROLES } from "../../../constants/roles";
-import { TRole } from "../../../types/user";
+import { Navigate, Outlet, useParams } from 'react-router-dom';
+import { USER_ROLES } from '../../../constants/roles';
+import { TRole } from '../../../types/user';
 
 const RoleChecker = () => {
   const { role } = useParams();

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import * as RadioGroup from "@radix-ui/react-radio-group";
+import * as RadioGroup from '@radix-ui/react-radio-group';
 
 type TRadioOption = {
   value: string;
@@ -20,7 +20,7 @@ const RadioButton: React.FC<Props> = ({
   id,
   label,
   value,
-  onClick
+  onClick,
 }) => {
   return (
     <div className="tw-flex tw-flex-col tw-gap-0.5">
@@ -29,14 +29,20 @@ const RadioButton: React.FC<Props> = ({
           {label}
         </label>
       )}
-      <RadioGroup.Root orientation="vertical" className="tw-flex tw-gap-4" defaultValue={value}>
+      <RadioGroup.Root
+        orientation="vertical"
+        className="tw-flex tw-gap-4"
+        defaultValue={value}
+      >
         {options.map((option, idx) => (
           <div key={idx} className="tw-inline-flex tw-items-center tw-gap-1">
             <RadioGroup.Item
               className="tw-w-6 tw-h-6 | tw-rounded-full tw-border-2 tw-border-black"
               id={`${id}-${idx}`}
               value={option.value}
-              onClick={() => {onClick(option.value)}}
+              onClick={() => {
+                onClick(option.value);
+              }}
             >
               <RadioGroup.Indicator className="tw-w-full tw-h-full | tw-flex tw-items-center tw-justify-center tw-relative || after:tw-w-3 after:tw-h-3 | after:tw-rounded-full after:tw-bg-black | after:tw-block" />
             </RadioGroup.Item>

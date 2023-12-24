@@ -1,7 +1,6 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
-import { TAuthUser } from "../types/user";
-
+import { TAuthUser } from '../types/user';
 
 type TAuthStoreData = {
   user: TAuthUser | null;

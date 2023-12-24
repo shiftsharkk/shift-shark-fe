@@ -1,5 +1,1 @@
-export const USER_ROLES = [
-  'hirer',
-  'service-provider',
-  'super-admin'
-] as const
+export const USER_ROLES = ['hirer', 'service-provider'] as const;

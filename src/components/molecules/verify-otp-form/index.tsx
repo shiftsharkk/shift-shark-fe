@@ -1,21 +1,22 @@
-import { isAxiosError } from "axios";
+import { isAxiosError } from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 
-import Input from "../../atoms/input-field";
-import { toast } from "../../atoms/toast";
-import Button from "../../atoms/button";
+import Input from '../../atoms/input-field';
+import { toast } from '../../atoms/toast';
+import Button from '../../atoms/button';
 
-import { verifyOTP } from "../../../api-calls/auth";
+import { TVerifyOtpResponse, verifyOTP } from '../../../api-calls/auth';
+import { TVerifyOtpSchema, verifyOtpSchema } from '../../../validations/auth';
 
-import { TVerifyOtpSchema, verifyOtpSchema } from "../../../validations/auth";
-import { useNavigate, useParams } from "react-router-dom";
+import { setAccessToken, setRefreshToken } from '../../../utils/authTokens';
 
 type VerifyOtpFormProps = {
   requestId: string;
   setRequestId: React.Dispatch<React.SetStateAction<string>>;
-  type: "login" | "register";
+  type: 'login' | 'register';
   phone: string;
 };
 
@@ -37,17 +38,19 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
 
   const { role } = useParams();
 
-  const handleAfterOtpVerification = (data: {
-    newUser: boolean;
-    requestToken: string;
-  }) => {
+  const handleAfterOtpVerification = (data: TVerifyOtpResponse['data']) => {
     if (data.newUser) {
-      navigate(`/${role}/onboarding?requestToken=${data.requestToken}`);
+      const params = new URLSearchParams();
+      params.set('requestToken', data.requestToken);
+      navigate(`/${role}/onboarding?${params.toString()}`);
       return;
     }
-    // [TODO]: handle login
-    localStorage.set("token", data.requestToken);
-    navigate("/dashboard");
+
+    // login user
+    setAccessToken(data.accessToken);
+    setRefreshToken(data.refreshToken);
+    navigate(`/${role}/dashboard`);
+    console.log('data', data);
   };
 
   const handleVerifyOtpSubmit = async (requestData: TVerifyOtpSchema) => {
@@ -56,10 +59,10 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
         ...requestData,
         requestId,
       });
-      toast.success("OTP verified successfully");
+      toast.success('OTP verified successfully');
       handleAfterOtpVerification(responseData.data);
     } catch (error) {
-      let errorMessage = "OTP verification failed";
+      let errorMessage = 'OTP verification failed';
       if (isAxiosError(error)) {
         errorMessage = error.response?.data.message ?? errorMessage;
       }
@@ -75,7 +78,7 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
       >
         <div className="tw-flex">
           <Input
-            {...register("otp", { required: "Phone number is required" })}
+            {...register('otp', { required: 'Phone number is required' })}
             placeholder="123456"
             label="OTP"
             error={errors.otp?.message}
@@ -90,13 +93,13 @@ const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({
           size="lg"
           className="tw-mt-4"
         >
-          {type === "login" ? "Login" : "Register"}
+          {type === 'login' ? 'Login' : 'Register'}
         </Button>
       </form>
       <div className="tw-text-center tw-text-sm">
         OTP has been sent to <b>{phone}</b>.<br />
-        Want to{" "}
-        <button onClick={() => setRequestId("")} className="tw-cursor-pointer">
+        Want to{' '}
+        <button onClick={() => setRequestId('')} className="tw-cursor-pointer">
           <b>change it?</b>
         </button>
       </div>

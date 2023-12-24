@@ -1,9 +1,9 @@
 import FormStepIndicatorElement, {
   TFormStepIndicatorElement,
-} from "../../atoms/form-step-indicator-element";
+} from '../../atoms/form-step-indicator-element';
 
 type Props = {
-  steps: Omit<TFormStepIndicatorElement, "showConnector" | "active">[];
+  steps: Omit<TFormStepIndicatorElement, 'showConnector' | 'active'>[];
   activeStep: number;
 };
 

@@ -1,13 +1,13 @@
-import React, { forwardRef } from "react";
-import { tmsx } from "../../../utils/tmsx";
+import React, { forwardRef } from 'react';
+import { tmsx } from '../../../utils/tmsx';
 
-import loaderWhite from "../../../assets/icons/loader-white.svg";
+import loaderWhite from '../../../assets/icons/loader-white.svg';
 
-import styles from "./styles.module.css";
+import styles from './styles.module.css';
 
 type Props = {
-  variant?: "primary" | "secondary" | "link";
-  size?: "sm" | "md" | "lg";
+  variant?: 'primary' | 'secondary' | 'link';
+  size?: 'sm' | 'md' | 'lg';
   block?: boolean;
   loading?: boolean;
 } & React.DetailedHTMLProps<
@@ -18,12 +18,12 @@ type Props = {
 const Button = forwardRef<HTMLButtonElement, Props>(
   (
     {
-      variant = "primary",
+      variant = 'primary',
       className,
-      size = "md",
+      size = 'md',
       block = false,
       children,
-      type = "button",
+      type = 'button',
       loading = false,
       disabled,
       ...rest
@@ -34,13 +34,15 @@ const Button = forwardRef<HTMLButtonElement, Props>(
       <button
         type={type}
         className={tmsx(
-          "tw-rounded-lg tw-inline-flex tw-items-center",
+          'tw-rounded-lg tw-inline-flex tw-items-center',
           {
-            ["tw-p-4 tw-text-base tw-font-bold"]: size === "lg",
-            ["tw-w-full"]: block,
-            ["tw-bg-black | tw-text-white"]: variant === "primary",
-            ["tw-bg-transparent | tw-text-black | tw-border tw-border-black"]: variant === "secondary",
-            ["tw-opacity-50 tw-pointer-events-none tw-cursor-not-allowed"]: disabled
+            ['tw-p-4 tw-text-base tw-font-bold']: size === 'lg',
+            ['tw-w-full']: block,
+            ['tw-bg-black | tw-text-white']: variant === 'primary',
+            ['tw-bg-transparent | tw-text-black | tw-border tw-border-black']:
+              variant === 'secondary',
+            ['tw-opacity-50 tw-pointer-events-none tw-cursor-not-allowed']:
+              disabled,
           },
           className
         )}

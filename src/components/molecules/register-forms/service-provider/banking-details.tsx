@@ -1,19 +1,22 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { useSearchParams } from 'react-router-dom';
 
-import Input from "../../atoms/input-field";
-import Button from "../../atoms/button";
+import Input from '../../../atoms/input-field';
+import Button from '../../../atoms/button';
 
 import {
   TBankingDetailsSchema,
   bankingDetailsSchema,
-} from "../../../validations/profile";
+} from '../../../../validations/profile';
+
+import { parseError } from '../../../../utils/parse-error';
+
+import { updateBankDetails } from '../../../../api-calls/service-provider/update-profile-details';
 
 const BankingDetailsForm = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const requestToken = searchParams.get("requestToken") ?? "";
+  const [, setSearchParams] = useSearchParams();
 
   const {
     register,
@@ -23,39 +26,44 @@ const BankingDetailsForm = () => {
     resolver: zodResolver(bankingDetailsSchema),
   });
 
-  const handleBasicDetailsSubmit = async (data: TBankingDetailsSchema) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log({ data });
+  const handleBankingDetailsSubmit = async (data: TBankingDetailsSchema) => {
+    try {
+      await updateBankDetails(data)
+    } catch (error) {
+      console.error({error})
+      const message = parseError(error)
+      toast(message)
+    }
   };
 
   return (
     <form
       className="tw-flex tw-flex-col tw-gap-5"
-      onSubmit={handleSubmit(handleBasicDetailsSubmit)}
+      onSubmit={handleSubmit(handleBankingDetailsSubmit)}
     >
       <Input
         label="Account Number"
         placeholder="000012345678901234"
         error={errors.accountNumber?.message}
-        {...register("accountNumber")}
+        {...register('accountNumber')}
       />
       <Input
         label="IFSC Code"
         placeholder="12003456789"
         error={errors.ifscCode?.message}
-        {...register("ifscCode")}
+        {...register('ifscCode')}
       />
       <Input
         label="Account Holder Name"
         placeholder="John Doe"
         error={errors.accountHolderName?.message}
-        {...register("accountHolderName")}
+        {...register('accountHolderName')}
       />
       <Input
         label="Bank Name"
         placeholder="HDFC"
         error={errors.bankName?.message}
-        {...register("bankName")}
+        {...register('bankName')}
       />
       <div className="tw-flex tw-gap-4 | tw-mt-4">
         <Button
@@ -65,7 +73,7 @@ const BankingDetailsForm = () => {
           variant="secondary"
           onClick={() => {
             setSearchParams((params) => {
-              params.set("step", "basic-details");
+              params.set('step', 'basic-details');
               return params;
             });
           }}

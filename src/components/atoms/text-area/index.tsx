@@ -1,10 +1,13 @@
-import React, { forwardRef } from 'react'
-import { tmsx } from '../../../utils/tmsx'
+import React, { forwardRef } from 'react';
+import { tmsx } from '../../../utils/tmsx';
 
 type Props = {
-  label?: string
-  error?: string
-} & React.DetailedHTMLProps<React.TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>
+  label?: string;
+  error?: string;
+} & React.DetailedHTMLProps<
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+  HTMLTextAreaElement
+>;
 
 const TextArea = forwardRef<HTMLTextAreaElement, Props>(
   ({ label, error, className, ...rest }, ref) => (
@@ -17,7 +20,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, Props>(
       <div className="tw-flex tw-w-full">
         <textarea
           className={tmsx(
-            "tw-px-4 tw-py-3 | tw-bg-[#FAFAFA] | tw-rounded-lg | tw-border-[#e7e7e7] tw-border | tw-w-full",
+            'tw-px-4 tw-py-3 | tw-bg-[#FAFAFA] | tw-rounded-lg | tw-border-[#e7e7e7] tw-border | tw-w-full',
             className
           )}
           {...rest}
@@ -27,7 +30,6 @@ const TextArea = forwardRef<HTMLTextAreaElement, Props>(
       {error && <p className="tw-text-red-500 tw-text-xs tw-mt-1">{error}</p>}
     </div>
   )
-)
+);
 
-
-export default TextArea
+export default TextArea;
