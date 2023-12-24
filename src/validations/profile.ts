@@ -30,18 +30,14 @@ export const userDetailsSchema = z.object({
 });
 
 export const companyDetailsGstinSchema = z.object({
-  name: z
-    .string()
-    .min(3, 'Company name must be at least 3 characters long'),
+  name: z.string().min(3, 'Company name must be at least 3 characters long'),
   address: z.string().min(15, 'Address must be at least 15 characters long'),
   isNgo: z.literal(false),
   gstin: z.string().min(15, 'GSTIN must be at least 15 characters long'),
 });
 
 export const companyDetailsRegNumSchema = z.object({
-  name: z
-    .string()
-    .min(3, 'Company name must be at least 3 characters long'),
+  name: z.string().min(3, 'Company name must be at least 3 characters long'),
   address: z.string().min(15, 'Address must be at least 15 characters long'),
   isNgo: z.literal(true),
   registrationNumber: z
