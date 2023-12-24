@@ -1,23 +1,24 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'react-router-dom';
-import { isAxiosError } from 'axios';
 
-import Button from '../../atoms/button';
-import Input from '../../atoms/input-field';
-import RadioButton from '../../atoms/radio-button';
-import TextArea from '../../atoms/text-area';
-import { toast } from '../../atoms/toast';
+import Button from '../../../atoms/button';
+import Input from '../../../atoms/input-field';
+import RadioButton from '../../../atoms/radio-button';
+import TextArea from '../../../atoms/text-area';
+import { toast } from '../../../atoms/toast';
+import CalendarField from '../../calendar-field';
 
-import CalendarField from '../calendar-field';
-
-import { createServiceProvider } from '../../../api-calls/service-provider/create-account';
+import { createServiceProvider } from '../../../../api-calls/service-provider/create-account';
 
 import {
   Genders,
   TPersonalDetailsSchema,
   personalDetailsSchema,
-} from '../../../validations/profile';
+} from '../../../../validations/profile';
+
+import { setAccessToken, setRefreshToken } from '../../../../utils/authTokens';
+import { parseError } from '../../../../utils/parse-error';
 
 const BasicDetailsForm: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -39,7 +40,7 @@ const BasicDetailsForm: React.FC = () => {
 
   const handleBasicDetailsSubmit = async (data: TPersonalDetailsSchema) => {
     try {
-      await createServiceProvider({
+      const response = await createServiceProvider({
         requestToken,
         userData: {
           user: {
@@ -48,6 +49,9 @@ const BasicDetailsForm: React.FC = () => {
           },
         },
       });
+      
+      setAccessToken(response.data.accessToken)
+      setRefreshToken(response.data.refreshToken)
 
       // go to next step
       setSearchParams((params) => {
@@ -55,13 +59,8 @@ const BasicDetailsForm: React.FC = () => {
         return params;
       });
     } catch (err) {
-      let errMessage =
-        'Something went wrong wile registering user. Please try again later.';
-      if (err instanceof Error) {
-        if (isAxiosError(err)) {
-          errMessage = err.response?.data?.message ?? err.message;
-        }
-      }
+      console.log({err})
+      const errMessage = parseError(err)
       toast.error(errMessage);
     }
   };

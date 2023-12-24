@@ -1,20 +1,25 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import Input from '../../atoms/input-field';
-import Button from '../../atoms/button';
-import TextArea from '../../atoms/text-area';
+import Input from '../../../atoms/input-field';
+import Button from '../../../atoms/button';
+import TextArea from '../../../atoms/text-area';
+import MultiInputField from '../../multi-input-field';
+import { TSearchInputOption } from '../../search-input';
 
-import { TSearchInputOption } from '../search-input';
 import {
   TAdditionalDetailsSchema,
   additionalDetailsSchema,
-} from '../../../validations/profile';
-import MultiInputField from '../multi-input-field';
+} from '../../../../validations/profile';
 
-import { SERVICE_PROVIDER_STRENGTHS } from '../../../constants/service-provider-strengths';
+import { SERVICE_PROVIDER_STRENGTHS } from '../../../../constants/service-provider-strengths';
+
+import { updateAdditionalDetails } from '../../../../api-calls/service-provider/update-profile-details';
+
+import { parseError } from '../../../../utils/parse-error';
 
 const AdditionalDetailsForm = () => {
   const [searchParams] = useSearchParams();
@@ -30,6 +35,13 @@ const AdditionalDetailsForm = () => {
     data: TAdditionalDetailsSchema
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      await updateAdditionalDetails(data)
+    } catch (err) {
+      console.error(err)
+      const message = parseError(err)
+      toast.error(message)
+    }
     console.log({ data });
   };
 
@@ -45,15 +57,15 @@ const AdditionalDetailsForm = () => {
 
   useEffect(() => {
     setValue(
-      'strengths',
+      'skills',
       selectedStrengths.map((strength) => strength.value)
     );
     if (selectedStrengths.length < 3 && selectedStrengths.length > 0) {
-      setError('strengths', {
-        message: 'Please select 3 strengths',
+      setError('skills', {
+        message: 'Please select 3 skills',
       });
     } else {
-      setError('strengths', {
+      setError('skills', {
         message: '',
       });
     }
@@ -89,7 +101,7 @@ const AdditionalDetailsForm = () => {
         setSelectedOptions={setSelectedStrengths}
         placeholder="Select Strengths (Pick 5)"
         maxSelections={5}
-        error={errors.strengths?.message}
+        error={errors.skills?.message}
       />
       <TextArea
         label="About Me"

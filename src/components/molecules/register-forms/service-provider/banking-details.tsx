@@ -1,19 +1,22 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { useSearchParams } from 'react-router-dom';
 
-import Input from '../../atoms/input-field';
-import Button from '../../atoms/button';
+import Input from '../../../atoms/input-field';
+import Button from '../../../atoms/button';
 
 import {
   TBankingDetailsSchema,
   bankingDetailsSchema,
-} from '../../../validations/profile';
+} from '../../../../validations/profile';
+
+import { parseError } from '../../../../utils/parse-error';
+
+import { updateBankDetails } from '../../../../api-calls/service-provider/update-profile-details';
 
 const BankingDetailsForm = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const requestToken = searchParams.get('requestToken') ?? '';
+  const [, setSearchParams] = useSearchParams();
 
   const {
     register,
@@ -23,15 +26,20 @@ const BankingDetailsForm = () => {
     resolver: zodResolver(bankingDetailsSchema),
   });
 
-  const handleBasicDetailsSubmit = async (data: TBankingDetailsSchema) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log({ data });
+  const handleBankingDetailsSubmit = async (data: TBankingDetailsSchema) => {
+    try {
+      await updateBankDetails(data)
+    } catch (error) {
+      console.error({error})
+      const message = parseError(error)
+      toast(message)
+    }
   };
 
   return (
     <form
       className="tw-flex tw-flex-col tw-gap-5"
-      onSubmit={handleSubmit(handleBasicDetailsSubmit)}
+      onSubmit={handleSubmit(handleBankingDetailsSubmit)}
     >
       <Input
         label="Account Number"

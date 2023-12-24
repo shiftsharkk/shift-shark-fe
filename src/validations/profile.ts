@@ -80,11 +80,10 @@ export const additionalDetailsSchema = z.object({
     .string()
     .length(12, 'Aadhar number must be 12 characters long'),
   photoURL: z.string().url('Invalid photo URL').optional(),
-  strengths: z
+  skills: z
     .array(z.string())
     .min(3, 'At least one skill is required')
-    .max(5, 'You can only select upto 5 strengths')
-    .optional(),
+    .max(5, 'You can only select upto 5 strengths'),
   schoolName: z
     .string()
     .min(6, 'School name must be at least 6 characters long'),

@@ -2,18 +2,18 @@ import axios from '../axios-instance';
 
 import {
   TAdditionalServiceProviderData,
-  TServiceProviderAccount,
+  TServiceProviderBankDetails,
 } from '../../types/user';
 import { TApiResponse } from '../../types/api';
 
-type TUpdateBankDetailsRequest = TServiceProviderAccount;
+type TUpdateBankDetailsRequest = TServiceProviderBankDetails;
 
 export const updateBankDetails = async (
   data: TUpdateBankDetailsRequest
 ): Promise<TApiResponse> => {
   const response = await axios.put(
-    '/service-provider/profile/bank-details',
-    data
+    '/service-provider/profile',
+    {bankDetails: data}
   );
   return response.data;
 };
@@ -24,8 +24,8 @@ export const updateAdditionalDetails = async (
   data: TUpdateAdditionalDetailsRequest
 ): Promise<TApiResponse> => {
   const response = await axios.put(
-    '/service-provider/profile/additional-details',
-    data
+    '/service-provider/profile',
+    {additionalDetails: data}
   );
   return response.data;
 };

@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 
-import UserDetailsForm from '../../molecules/register-forms/user-details';
-import CompanyDetailsForm from '../../molecules/register-forms/company-details';
+import UserDetailsForm from '../../molecules/register-forms/hirer/user-details';
+import CompanyDetailsForm from '../../molecules/register-forms/hirer/company-details';
 import OnboardingSteps from '../../organisms/onboarding-steps';
-import BasicDetailsForm from '../../molecules/register-forms/basic-details';
-import BankingDetailsForm from '../../molecules/register-forms/banking-details';
-import AdditionalDetailsForm from '../../molecules/register-forms/additional-details';
+import BasicDetailsForm from '../../molecules/register-forms/service-provider/basic-details';
+import BankingDetailsForm from '../../molecules/register-forms/service-provider/banking-details';
+import AdditionalDetailsForm from '../../molecules/register-forms/service-provider/additional-details';
 
 import BriefcaseWhiteIcon from '../../../assets/icons/briefcase-white.svg';
 import BriefcaseBlackIcon from '../../../assets/icons/briefcase-black.svg';

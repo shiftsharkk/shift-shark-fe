@@ -1,21 +1,24 @@
+import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import Input from '../../atoms/input-field';
-import Button from '../../atoms/button';
-import ToggleSwitch from '../../atoms/toggle-switch';
+import Input from '../../../atoms/input-field';
+import Button from '../../../atoms/button';
+import TextArea from '../../../atoms/text-area';
+import ToggleSwitch from '../../../atoms/toggle-switch';
 
 import {
   TCompanyDetailsSchema,
   companyDetailsSchema,
-} from '../../../validations/profile';
-import TextArea from '../../atoms/text-area';
-import { useEffect, useState } from 'react';
-import { useHirerSignupStore } from '../../../stores/hirer-signup.store';
-import { createHirer } from '../../../api-calls/hirer/create-account';
-import { toast } from 'react-toastify';
-import { isAxiosError } from 'axios';
+} from '../../../../validations/profile';
+
+import { useHirerSignupStore } from '../../../../stores/hirer-signup.store';
+
+import { createHirer } from '../../../../api-calls/hirer/create-account';
+
+import { parseError } from '../../../../utils/parse-error';
 
 const CompanyDetailsForm = () => {
   const [isNgo, setIsNgo] = useState(false);
@@ -70,16 +73,8 @@ const CompanyDetailsForm = () => {
       navigate('/hirer/auth?accountCreated=true');
     } catch (err) {
       console.log(err);
-      let errMessage =
-        'Something went wrong wile registering user. Please try again later.';
-      if (err instanceof Error) {
-        if (isAxiosError(err)) {
-          if (err.response?.data?.message) {
-            errMessage = err.response?.data?.message;
-          }
-        }
-      }
-      toast.error(errMessage);
+      const message = parseError(err)
+      toast.error(message);
     }
   };
 

@@ -5,11 +5,11 @@ export type TRole = (typeof USER_ROLES)[number];
 export type TAdditionalServiceProviderData = {
   PAN: string;
   aadharNumber: string;
-  photoURL: string;
+  photoURL?: string;
   skills: string[];
-  resume: string;
+  resume?: string;
   schoolName: string;
-  aboutMe: string;
+  aboutMe?: string;
 };
 
 export type TServiceProviderBankDetails = {
@@ -33,25 +33,28 @@ export type TCompanyDetails = {
   registrationNumber?: string;
 };
 
-export type TAuthUser = {
-  _id: string;
+export type TServiceProviderBasicDetails = {
   name: string;
-  dob: number;
-  gender: 'Male' | 'Female';
+  email: string;
+  gender: string;
   address: string;
+  dob: string;
   phone: string;
-  verified: boolean;
-  onboardingCompleted: boolean;
-  role: TRole;
-};
+  createdAt: string;
+  updatedAt: string;
+  verified: string;
+  onboardingCompleted: string;
+  role: string;
+  _id: string;
+}
 
-export type TServiceProviderAccount = TAuthUser & {
-  role: 'service-provider';
+export type TServiceProviderAccount = {
+  user: TServiceProviderBasicDetails;
   additionalData: TAdditionalServiceProviderData;
   bankDetails: TServiceProviderBankDetails;
 };
 
-export type THirerAccount = TAuthUser & {
+export type THirerAccount = {
   role: 'hirer';
   userDetails: THirerUserDetails;
   companyDetails: TCompanyDetails;

@@ -3,15 +3,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchParams } from 'react-router-dom';
 import { isAxiosError } from 'axios';
 
-import Button from '../../atoms/button';
-import Input from '../../atoms/input-field';
-import { toast } from '../../atoms/toast';
+import Button from '../../../atoms/button';
+import Input from '../../../atoms/input-field';
+import { toast } from '../../../atoms/toast';
 
 import {
   TUserDetailsSchema,
   userDetailsSchema,
-} from '../../../validations/profile';
-import { useHirerSignupStore } from '../../../stores/hirer-signup.store';
+} from '../../../../validations/profile';
+
+import { useHirerSignupStore } from '../../../../stores/hirer-signup.store';
 
 const UserDetailsForm: React.FC = () => {
   const [ , setSearchParams] = useSearchParams();
