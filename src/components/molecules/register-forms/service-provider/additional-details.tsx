@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
@@ -22,25 +22,22 @@ import { updateAdditionalDetails } from '../../../../api-calls/service-provider/
 import { parseError } from '../../../../utils/parse-error';
 
 const AdditionalDetailsForm = () => {
-  const [searchParams] = useSearchParams();
   const [selectedStrengths, setSelectedStrengths] = useState<
     TSearchInputOption[]
   >([]);
 
   const navigate = useNavigate();
 
-  const requestToken = searchParams.get('requestToken') ?? '';
-
   const handleAdditionalDetailsSubmit = async (
     data: TAdditionalDetailsSchema
   ) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     try {
-      await updateAdditionalDetails(data)
+      await updateAdditionalDetails(data);
     } catch (err) {
-      console.error(err)
-      const message = parseError(err)
-      toast.error(message)
+      console.error(err);
+      const message = parseError(err);
+      toast.error(message);
     }
     console.log({ data });
   };

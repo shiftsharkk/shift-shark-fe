@@ -49,9 +49,9 @@ const BasicDetailsForm: React.FC = () => {
           },
         },
       });
-      
-      setAccessToken(response.data.accessToken)
-      setRefreshToken(response.data.refreshToken)
+
+      setAccessToken(response.data.accessToken);
+      setRefreshToken(response.data.refreshToken);
 
       // go to next step
       setSearchParams((params) => {
@@ -59,8 +59,8 @@ const BasicDetailsForm: React.FC = () => {
         return params;
       });
     } catch (err) {
-      console.log({err})
-      const errMessage = parseError(err)
+      console.log({ err });
+      const errMessage = parseError(err);
       toast.error(errMessage);
     }
   };

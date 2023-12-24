@@ -9,7 +9,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prettier": "prettier --write src/",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "check-types": "tsc --pretty --noEmit"
   },
   "lint-staged": {
     "./src/**/*.{js,ts,jsx,tsx,scss,css}": "prettier --write",
