@@ -6,12 +6,14 @@ import Onboarding from '../components/pages/onboarding';
 import ComponentsTest from '../components/pages/compo';
 import RoleChecker from '../components/atoms/role-checkoer';
 import AuthGuard from '../components/layouts/auth-guard';
+import ComingSoon from '@/components/pages/comingsoon';
 
 const Routes = () => {
   return (
     <RouterRoutes>
       <Route path="/" element={<Root />} />
       <Route path="/compo" element={<ComponentsTest />} />
+      <Route path="/coming-soon" element={<ComingSoon />} />
 
       {/* role checked routes */}
       <Route element={<RoleChecker />}>
