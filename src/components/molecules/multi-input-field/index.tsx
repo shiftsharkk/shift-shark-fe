@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { tmsx } from '../../../utils/tmsx';
 
 import Tag from '../../atoms/tag/inex';
 import { TInputProps } from '../../atoms/input-field';
 
 import SearchInput, { TSearchInputOption } from '../search-input';
+import { cn } from '../../../utils/utils';
 
 type Props = {
   options: TSearchInputOption[];
@@ -41,7 +41,7 @@ const MultiInputField: React.FC<Props> = ({
   };
 
   return (
-    <div className={tmsx(className)}>
+    <div className={cn(className)}>
       <SearchInput
         label={`${label} (${selectedOptions.length}/${maxSelections})`}
         options={_options}

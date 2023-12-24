@@ -1,5 +1,5 @@
 import CloseIcon from '../../../assets/icons/close-circle-black-bg.svg';
-import { tmsx } from '../../../utils/tmsx';
+import { cn } from '../../../utils/utils';
 
 type Props = {
   name: string;
@@ -9,7 +9,7 @@ type Props = {
 const Tag: React.FC<Props> = ({ name, onClickDelete }) => {
   return (
     <span
-      className={tmsx(
+      className={cn(
         'tw-inline-flex tw-gap-1 tw-items-center | tw-p-1 tw-pl-2',
         'tw-border tw-border-black | tw-shadow-sm | tw-rounded-full | tw-font-bold',
         'tw-text-xs'

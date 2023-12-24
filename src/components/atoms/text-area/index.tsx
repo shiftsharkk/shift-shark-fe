@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { tmsx } from '../../../utils/tmsx';
+import { cn } from '../../../utils/utils';
 
 type Props = {
   label?: string;
@@ -19,7 +19,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, Props>(
       )}
       <div className="tw-flex tw-w-full">
         <textarea
-          className={tmsx(
+          className={cn(
             'tw-px-4 tw-py-3 | tw-bg-[#FAFAFA] | tw-rounded-lg | tw-border-[#e7e7e7] tw-border | tw-w-full',
             className
           )}

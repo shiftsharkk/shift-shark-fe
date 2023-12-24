@@ -1,5 +1,5 @@
 import React, { ReactElement, forwardRef } from 'react';
-import { tmsx } from '../../../utils/tmsx';
+import { cn } from '../../../utils/utils';
 
 export type TInputProps = {
   type?: 'text' | 'password';
@@ -39,7 +39,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
           )}
           <input
             disabled={disabled}
-            className={tmsx(
+            className={cn(
               'tw-px-4 tw-py-3 | tw-bg-[#FAFAFA] | tw-rounded-lg | tw-border-[#e7e7e7] tw-border',
               {
                 ['tw-flex-1 tw-border-l-0 tw-rounded-l-none']: !!prefixElement,
