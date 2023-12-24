@@ -4,7 +4,7 @@ import Tag from '../../atoms/tag/inex';
 import { TInputProps } from '../../atoms/input-field';
 
 import SearchInput, { TSearchInputOption } from '../search-input';
-import { cn } from '../../../utils/utils';
+import { cn } from '@/lib/utils';
 
 type Props = {
   options: TSearchInputOption[];

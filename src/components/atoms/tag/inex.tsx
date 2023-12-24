@@ -1,5 +1,5 @@
 import CloseIcon from '../../../assets/icons/close-circle-black-bg.svg';
-import { cn } from '../../../utils/utils';
+import { cn } from '@/lib/utils';
 
 type Props = {
   name: string;

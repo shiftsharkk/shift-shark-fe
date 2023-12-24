@@ -1,5 +1,5 @@
 import * as Toggle from '@radix-ui/react-toggle';
-import { cn } from '../../../utils/utils';
+import { cn } from '@/lib/utils';
 
 type Props = {
   toggle: boolean;

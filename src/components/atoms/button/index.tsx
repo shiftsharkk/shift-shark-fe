@@ -2,8 +2,9 @@ import React, { forwardRef } from 'react';
 
 import loaderWhite from '../../../assets/icons/loader-white.svg';
 
+import { cn } from '@/lib/utils';
+
 import styles from './styles.module.css';
-import { cn } from '../../../utils/utils';
 
 type Props = {
   variant?: 'primary' | 'secondary' | 'link';

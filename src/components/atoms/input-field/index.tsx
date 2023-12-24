@@ -1,5 +1,5 @@
 import React, { ReactElement, forwardRef } from 'react';
-import { cn } from '../../../utils/utils';
+import { cn } from '@/lib/utils';
 
 export type TInputProps = {
   type?: 'text' | 'password';
