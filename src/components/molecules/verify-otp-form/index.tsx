@@ -11,7 +11,7 @@ import Button from '../../atoms/button';
 import { TVerifyOtpResponse, verifyOTP } from '../../../api-calls/auth';
 import { TVerifyOtpSchema, verifyOtpSchema } from '../../../validations/auth';
 
-import { setAccessToken, setRefreshToken } from '../../../utils/authTokens';
+import { setAccessToken, setRefreshToken } from '../../../utils/auth';
 
 type VerifyOtpFormProps = {
   requestId: string;

@@ -1,6 +1,10 @@
+import { LogOut, User } from 'lucide-react';
+
 import { Button } from '@/components/shadcn/ui/button';
 import { Skeleton } from '@/components/shadcn/ui/skeleton';
-import { LogOut, User } from 'lucide-react';
+
+import { logout } from '@/utils/auth';
+
 import logo from '../../../assets/logo-dark.svg';
 
 const Sidebar = () => {
@@ -12,10 +16,13 @@ const Sidebar = () => {
         <Skeleton className="tw-h-8 tw-w-full" />
         <Skeleton className="tw-h-8 tw-w-full" />
       </div>
-      <div className="tw-flex tw-justify-between tw-px-5 tw-py-3 tw-border-t twborder-[#D6D6D6]">
+      <div className="tw-flex tw-justify-between tw-px-5 tw-py-3 tw-border-t tw-border-[#D6D6D6]">
         <Button
           variant="ghost"
           className="tw-text-base !tw-p-0 hover:tw-bg-transparent"
+          onClick={() => {
+            logout();
+          }}
         >
           <LogOut className="tw-w-6 tw-mr-1" />
           Logout

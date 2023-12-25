@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 
 import { TAuthUser } from '../../types/user';
 
-import { TDecodedToken, getAccessToken } from '../../utils/authTokens';
+import { TDecodedToken, getAccessToken } from '../../utils/auth';
 
 import { useAuthStore } from '../../stores/auth.store';
 

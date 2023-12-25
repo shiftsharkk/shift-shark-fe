@@ -29,6 +29,10 @@ const BankingDetailsForm = () => {
   const handleBankingDetailsSubmit = async (data: TBankingDetailsSchema) => {
     try {
       await updateBankDetails(data);
+      setSearchParams((params) => {
+        params.set('step', 'additional-details');
+        return params;
+      });
     } catch (error) {
       console.error({ error });
       const message = parseError(error);

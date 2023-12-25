@@ -1,5 +1,6 @@
 import Sidebar from '@/components/organisms/sidebar';
 import comingsoonImage from '../../../assets/images/comingsoon.svg';
+
 const ComingSoon = () => {
   return (
     <div className="tw-flex tw-w-screen tw-h-screen">
@@ -13,9 +14,8 @@ const ComingSoon = () => {
           Our Team is hard at work to deliver an amazing experience! <br />
           You’ll be notified as soon as we are live
         </p>
-        <p>
-          Meanwhile our team will reach out to you for{' '}
-          <span className="tw-font-semibold">Document Verification</span>
+        <p className="tw-font-semibold">
+          Meanwhile our team will verify your documents and approve your profile
         </p>
       </div>
     </div>

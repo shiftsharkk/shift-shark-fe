@@ -34,6 +34,7 @@ const AdditionalDetailsForm = () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     try {
       await updateAdditionalDetails(data);
+      navigate('/service-provider/dashboard');
     } catch (err) {
       console.error(err);
       const message = parseError(err);

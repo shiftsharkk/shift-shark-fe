@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAccessToken } from '../utils/authTokens';
+import { getAccessToken } from '../utils/auth';
 
 axios.defaults.baseURL = `${import.meta.env.VITE_BACKEND_URL}`;
 

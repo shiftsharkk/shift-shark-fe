@@ -17,7 +17,7 @@ import {
   personalDetailsSchema,
 } from '../../../../validations/profile';
 
-import { setAccessToken, setRefreshToken } from '../../../../utils/authTokens';
+import { setAccessToken, setRefreshToken } from '../../../../utils/auth';
 import { parseError } from '../../../../utils/parse-error';
 
 const BasicDetailsForm: React.FC = () => {

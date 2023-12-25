@@ -1,19 +1,21 @@
 import { Route, Routes as RouterRoutes } from 'react-router-dom';
 
+import RoleChecker from '../components/atoms/role-checkoer';
+
+import AuthGuard from '../components/layouts/auth-guard';
+
 import Root from '../components/pages/root';
 import Login from '../components/pages/login';
 import Onboarding from '../components/pages/onboarding';
 import ComponentsTest from '../components/pages/compo';
-import RoleChecker from '../components/atoms/role-checkoer';
-import AuthGuard from '../components/layouts/auth-guard';
-import ComingSoon from '@/components/pages/comingsoon';
+import ComingSoon from '@/components/pages/coming-soon';
+import Dashboard from '@/components/pages/dashboard';
 
 const Routes = () => {
   return (
     <RouterRoutes>
       <Route path="/" element={<Root />} />
       <Route path="/compo" element={<ComponentsTest />} />
-      <Route path="/coming-soon" element={<ComingSoon />} />
 
       {/* role checked routes */}
       <Route element={<RoleChecker />}>
@@ -21,7 +23,8 @@ const Routes = () => {
         <Route path="/:role/onboarding" element={<Onboarding />} />
         {/* protected routes */}
         <Route element={<AuthGuard />}>
-          <Route path="/:role/dashboard" element={<div>Dashboard</div>} />
+          <Route path="/:role/dashboard" element={<Dashboard />} />
+          <Route path="/:role/coming-soon" element={<ComingSoon />} />
         </Route>
         {/* end of protected routes */}
       </Route>

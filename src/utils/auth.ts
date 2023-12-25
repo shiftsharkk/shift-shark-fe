@@ -27,3 +27,9 @@ export const getRefreshToken = () => {
 export const setRefreshToken = (token: string) => {
   localStorage.setItem(LOCAL_STORAGE_KEYS.REFRESH_TOKEN, token);
 };
+
+export const logout = () => {
+  localStorage.removeItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
+  localStorage.removeItem(LOCAL_STORAGE_KEYS.REFRESH_TOKEN);
+  window.location.reload();
+};

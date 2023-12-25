@@ -1,5 +1,9 @@
+import { Navigate, useParams } from 'react-router-dom';
+
 const Dashboard = () => {
-  return <div>Hello from the dashboard</div>;
+  const { role } = useParams();
+
+  return <Navigate to={`/${role}/coming-soon`} />;
 };
 
 export default Dashboard;

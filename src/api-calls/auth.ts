@@ -43,13 +43,18 @@ type TExistingUserVerifyResponse = {
   refreshToken: string;
 };
 
-export type TVerifyOtpResponse = {
-  data: TNewUserVerifyResponse | TExistingUserVerifyResponse;
-} & TApiResponse;
+export type TVerifyOtpResponse = TApiResponse<
+  TNewUserVerifyResponse | TExistingUserVerifyResponse
+>;
 
 export const verifyOTP = async (
   data: TVerifyOtpRequest
 ): Promise<TVerifyOtpResponse> => {
   const response = await axios.post('/auth/verifyOTP', data);
+  return response.data;
+};
+
+export const refreshToken = async (): Promise<TVerifyOtpResponse> => {
+  const response = await axios.post('/auth/refresh-token');
   return response.data;
 };
