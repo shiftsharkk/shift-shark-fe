@@ -1,7 +1,8 @@
 import React, { forwardRef } from 'react';
-import { tmsx } from '../../../utils/tmsx';
 
 import loaderWhite from '../../../assets/icons/loader-white.svg';
+
+import { cn } from '@/lib/utils';
 
 import styles from './styles.module.css';
 
@@ -33,7 +34,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
     return (
       <button
         type={type}
-        className={tmsx(
+        className={cn(
           'tw-rounded-lg tw-inline-flex tw-items-center',
           {
             ['tw-p-4 tw-text-base tw-font-bold']: size === 'lg',
@@ -53,7 +54,7 @@ const Button = forwardRef<HTMLButtonElement, Props>(
         <img
           src={loaderWhite}
           alt="loading"
-          className={tmsx(styles.loader, { [styles.active]: loading })}
+          className={cn(styles.loader, { [styles.active]: loading })}
         />
         <span className="tw-flex-1">{children}</span>
       </button>

@@ -1,5 +1,5 @@
 import * as Toggle from '@radix-ui/react-toggle';
-import { tmsx } from '../../../utils/tmsx';
+import { cn } from '@/lib/utils';
 
 type Props = {
   toggle: boolean;
@@ -13,13 +13,13 @@ const ToggleSwitch: React.FC<Props> = ({ toggle, setToggle, size }) => {
     <Toggle.Root
       pressed={toggle}
       onPressedChange={setToggle}
-      className={tmsx(
+      className={cn(
         'tw-p-0.5 | tw-border tw-border-black | tw-rounded-full | tw-relative',
         { ['tw-w-[26px]']: size === 'sm', ['tw-w-[38px]']: size === 'md' }
       )}
     >
       <span
-        className={tmsx(
+        className={cn(
           'tw-block | tw-rounded-full | tw-bg-black | tw-transition-transform',
           {
             [' tw-translate-x-full']: toggle,
