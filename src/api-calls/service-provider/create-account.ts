@@ -10,7 +10,6 @@ type TCreateServiceProviderRequest = {
       name: string;
       dob: number;
       gender: 'Male' | 'Female';
-      address: string;
     };
   };
 };

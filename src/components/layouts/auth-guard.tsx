@@ -1,26 +1,48 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 import { TAuthUser } from '../../types/user';
-import { TDecodedToken } from '../../types/auth';
 
 import { getAccessToken } from '../../utils/auth';
 
 import { useAuthStore } from '../../stores/auth.store';
+import { TDecodedToken } from '@/types/auth';
+import { getUser } from '@/api-calls/user';
+import { useUserStore } from '@/stores/user.store';
 
 const AuthGuard: React.FC = () => {
   const navigate = useNavigate();
   const { role } = useParams();
+  const makeApiCall = useRef(false);
+  const { setUser } = useUserStore();
 
-  const setUser = useAuthStore((state) => state.setUser);
+  const setAuthUser = useAuthStore((state) => state.setUser);
 
   const initAuthStore = useCallback(
     (user: TAuthUser) => {
-      setUser(user);
+      setAuthUser(user);
     },
-    [setUser]
+    [setAuthUser]
   );
+
+  useEffect(() => {
+    const storeUser = async () => {
+      try {
+        const res = await getUser();
+        if (res.data) {
+          setUser(res.data.user);
+          console.log(res.data.user, 'user');
+        }
+      } catch (error) {
+        navigate(`/${role}/auth?redirect=no-token`);
+      }
+    };
+    if (makeApiCall.current) {
+      storeUser();
+    }
+    makeApiCall.current = true;
+  }, []);
 
   useEffect(() => {
     const token = getAccessToken();
@@ -37,6 +59,7 @@ const AuthGuard: React.FC = () => {
     }
 
     // [TODO] : handle token expiry
+    // [TODO] : update decoded token type. It ain't TAuthUser
     initAuthStore(decodedToken);
   }, [initAuthStore, navigate, role]);
 

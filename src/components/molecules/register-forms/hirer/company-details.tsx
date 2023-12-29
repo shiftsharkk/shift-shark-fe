@@ -89,6 +89,12 @@ const CompanyDetailsForm = () => {
         error={errors.name?.message}
         {...register('name')}
       />
+      <Input
+        label="Phone Number"
+        placeholder="9876543210"
+        error={errors.phone?.message}
+        {...register('phone')}
+      />
       <TextArea
         label="Address"
         placeholder="Building No, Street Name,&#10;City,&#10;Pin Code"
@@ -140,23 +146,11 @@ const CompanyDetailsForm = () => {
         <Button
           className="tw-flex-1"
           size="lg"
-          type="button"
-          variant="secondary"
-          onClick={() => {
-            navigate(-1);
-          }}
-          disabled={isSubmitting}
-        >
-          Back
-        </Button>
-        <Button
-          className="tw-flex-1"
-          size="lg"
           type="submit"
           loading={isSubmitting}
           disabled={isSubmitting}
         >
-          Next
+          Create Profile
         </Button>
       </div>
     </form>

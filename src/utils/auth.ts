@@ -3,10 +3,11 @@ import { LOCAL_STORAGE_KEYS } from '../constants/local-storage-keys';
 
 export const getAccessToken = () => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
-  if(!token) return null;
+  if (!token) return null;
 
   const decodedToken = jwtDecode(token);
   // if(decodedToken)
+  console.log(decodedToken);
 
   return token;
 };

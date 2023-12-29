@@ -37,6 +37,23 @@ export type TCompanyDetails = {
   registrationNumber?: string;
 };
 
+export type TUser = {
+  _id: string;
+  cityName: string;
+  name: string;
+  email: string;
+  gender: string;
+  dob: string;
+  phone: string;
+  createdAt: string;
+  updatedAt: string;
+  verified: boolean;
+  onboardingCompleted: boolean;
+  additionalDetails: TAdditionalServiceProviderData | null;
+  bankDetails: TServiceProviderBankDetails | null;
+  role: TRole;
+};
+
 export type TServiceProviderBasicDetails = {
   name: string;
   email: string;

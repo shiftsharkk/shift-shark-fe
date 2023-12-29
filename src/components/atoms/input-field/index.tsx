@@ -6,6 +6,7 @@ export type TInputProps = {
   label?: string;
   prefixElement?: ReactElement;
   error?: string;
+  labelSuffixElement?: ReactElement;
 } & React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
@@ -19,6 +20,7 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
       className,
       prefixElement,
       error,
+      labelSuffixElement,
       disabled,
       ...rest
     },
@@ -27,9 +29,12 @@ const Input = forwardRef<HTMLInputElement, TInputProps>(
     return (
       <div className="tw-w-full">
         {label && (
-          <label className="tw-text-sm tw-mb-2 | tw-block | tw-font-bold">
-            {label}
-          </label>
+          <div className="tw-flex">
+            <label className="tw-text-sm tw-mb-2 | tw-block | tw-font-bold | tw-mr-1">
+              {label}
+            </label>
+            {labelSuffixElement}
+          </div>
         )}
         <div className="tw-flex tw-w-full">
           {prefixElement && (

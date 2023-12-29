@@ -14,9 +14,23 @@ import {
 import { parseError } from '../../../../utils/parse-error';
 
 import { updateBankDetails } from '../../../../api-calls/service-provider/update-profile-details';
+import { useServiceProviderSignupStore } from '@/stores/serviceProvider-signup.store';
+import { useEffect } from 'react';
 
 const BankingDetailsForm = () => {
   const [, setSearchParams] = useSearchParams();
+  const { basicDetails } = useServiceProviderSignupStore();
+
+  useEffect(() => {
+    if (!basicDetails) {
+      toast.error('Please start over! Cannot find basic details');
+      setSearchParams((params) => {
+        params.set('step', 'basic-details');
+        return params;
+      });
+      return;
+    }
+  }, [setSearchParams, basicDetails]);
 
   const {
     register,
@@ -48,8 +62,16 @@ const BankingDetailsForm = () => {
       <Input
         label="Account Number"
         placeholder="000012345678901234"
+        type="password"
         error={errors.accountNumber?.message}
         {...register('accountNumber')}
+      />
+      <Input
+        label="Confirm Account Number"
+        placeholder="000012345678901234"
+        type="text"
+        error={errors.confirmAccountNumber?.message}
+        {...register('confirmAccountNumber')}
       />
       <Input
         label="IFSC Code"

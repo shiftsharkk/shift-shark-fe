@@ -70,6 +70,12 @@ const UserDetailsForm: React.FC = () => {
         error={errors.designation?.message}
         placeholder="Manager"
       />
+      <Input
+        label="Phone Number"
+        {...register('phone')}
+        error={errors.phone?.message}
+        placeholder="9876543210"
+      />
       <Button
         loading={isSubmitting}
         disabled={isSubmitting}
