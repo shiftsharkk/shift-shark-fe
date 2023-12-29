@@ -42,7 +42,7 @@ const Sidebar = () => {
           </Button>
         </div>
       </div>
-      <div className="tw-flex tw-absolute tw-w-full  tw-items-center tw-bg-white tw-py-3 tw-px-3">
+      <div className="tw-flex lg:tw-hidden tw-absolute tw-w-full  tw-items-center tw-bg-white tw-py-3 tw-px-3">
         <Sheet>
           <SheetTrigger asChild>
             <List className="tw-mr-5" />
