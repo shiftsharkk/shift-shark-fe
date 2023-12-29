@@ -16,7 +16,6 @@ type Props = {
 const AuthBlock: React.FC<Props> = ({ type = 'login' }) => {
   const [requestId, setRequestId] = useState('');
   const [phone, setPhone] = useState('');
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {

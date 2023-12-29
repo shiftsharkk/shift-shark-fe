@@ -9,7 +9,6 @@ export const personalDetailsSchema = z.object({
   name: z.string().min(6, 'Name must be at least 6 characters long'),
   email: z.string().email('Invalid email address').min(1, 'Email is required'),
   gender: z.nativeEnum(Genders),
-  address: z.string().min(15, 'Address must be at least 15 characters long'),
   dob: z
     .instanceof(Date, { message: 'Invalid date of birth' })
     .refine((date) => {
@@ -27,10 +26,20 @@ export const userDetailsSchema = z.object({
   designation: z
     .string()
     .min(1, 'Designation must be at least 6 characters long'),
+  phone: z
+    .string()
+    .min(10, 'Phone number needs to be 10 digits')
+    .max(10, 'Phone number needs to be 10 digits')
+    .regex(/^\d+$/, 'Phone number can only contain digits'),
 });
 
 export const companyDetailsGstinSchema = z.object({
   name: z.string().min(3, 'Company name must be at least 3 characters long'),
+  phone: z
+    .string()
+    .min(10, 'Phone number needs to be 10 digits')
+    .max(10, 'Phone number needs to be 10 digits')
+    .regex(/^\d+$/, 'Phone number can only contain digits'),
   address: z.string().min(15, 'Address must be at least 15 characters long'),
   isNgo: z.literal(false),
   gstin: z.string().min(15, 'GSTIN must be at least 15 characters long'),
@@ -38,6 +47,11 @@ export const companyDetailsGstinSchema = z.object({
 
 export const companyDetailsRegNumSchema = z.object({
   name: z.string().min(3, 'Company name must be at least 3 characters long'),
+  phone: z
+    .string()
+    .min(10, 'Phone number needs to be 10 digits')
+    .max(10, 'Phone number needs to be 10 digits')
+    .regex(/^\d+$/, 'Phone number can only contain digits'),
   address: z.string().min(15, 'Address must be at least 15 characters long'),
   isNgo: z.literal(true),
   registrationNumber: z
@@ -56,17 +70,26 @@ export type TUserDetailsSchema = z.infer<typeof userDetailsSchema>;
 
 export type TCompanyDetailsSchema = z.infer<typeof companyDetailsSchema>;
 
-export const bankingDetailsSchema = z.object({
-  accountNumber: z
-    .string()
-    .min(9, 'Bank account number must be at least 9 characters long')
-    .max(18, 'Bank account number must be at most 18 characters long'),
-  ifscCode: z.string().length(11, 'IFSC code must be 11 characters long'),
-  accountHolderName: z
-    .string()
-    .min(6, 'Account holder name must be at least 6 characters long'),
-  bankName: z.string().min(3, 'Bank name must be at least 3 characters long'),
-});
+export const bankingDetailsSchema = z
+  .object({
+    accountNumber: z
+      .string()
+      .min(9, 'Bank account number must be at least 9 characters long')
+      .max(18, 'Bank account number must be at most 18 characters long'),
+    confirmAccountNumber: z
+      .string()
+      .min(9, 'Bank account number must be at least 9 characters long')
+      .max(18, 'Bank account number must be at most 18 characters long'),
+    ifscCode: z.string().length(11, 'IFSC code must be 11 characters long'),
+    accountHolderName: z
+      .string()
+      .min(6, 'Account holder name must be at least 6 characters long'),
+    bankName: z.string().min(3, 'Bank name must be at least 3 characters long'),
+  })
+  .refine((data) => data.accountNumber === data.confirmAccountNumber, {
+    message: 'Account numbers must match',
+    path: ['confirmAccountNumber'],
+  });
 
 export type TBankingDetailsSchema = z.infer<typeof bankingDetailsSchema>;
 

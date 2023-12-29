@@ -5,10 +5,9 @@ import { useSearchParams } from 'react-router-dom';
 import Button from '../../../atoms/button';
 import Input from '../../../atoms/input-field';
 import RadioButton from '../../../atoms/radio-button';
-import TextArea from '../../../atoms/text-area';
 import { toast } from '../../../atoms/toast';
 import CalendarField from '../../calendar-field';
-
+import InfoTooltip from '@/components/atoms/info-tooltip';
 import { createServiceProvider } from '../../../../api-calls/service-provider/create-account';
 
 import {
@@ -19,12 +18,14 @@ import {
 
 import { setAccessToken, setRefreshToken } from '../../../../utils/auth';
 import { parseError } from '../../../../utils/parse-error';
+import { useServiceProviderSignupStore } from '@/stores/serviceProvider-signup.store';
 
 const BasicDetailsForm: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const tooltipMessage =
+    "We're curently live only in Bengaluru. Coming to your city soon";
   const requestToken = searchParams.get('requestToken') ?? '';
-
+  const { setBasicDetails } = useServiceProviderSignupStore();
   const {
     register,
     getValues,
@@ -40,6 +41,7 @@ const BasicDetailsForm: React.FC = () => {
 
   const handleBasicDetailsSubmit = async (data: TPersonalDetailsSchema) => {
     try {
+      setBasicDetails(data);
       const response = await createServiceProvider({
         requestToken,
         userData: {
@@ -108,19 +110,24 @@ const BasicDetailsForm: React.FC = () => {
         label="Date of birth"
         error={errors.dob?.message}
       />
-      <TextArea
-        label="Address"
-        placeholder="Enter your address"
-        {...register('address')}
-        error={errors.address?.message}
+      <Input
+        label="City"
+        labelSuffixElement={<InfoTooltip content={tooltipMessage} />}
+        placeholder="Bengaluru"
+        disabled
       />
+
+      <p className="tw-text-sm tw-mb-2 | tw-block | tw-font-bold | tw-mt-2">
+        By clicking on Next, you acknowledge and accept our Terms and
+        Conditions.
+      </p>
       <Button
         loading={isSubmitting}
         disabled={isSubmitting}
         type="submit"
         block
         size="lg"
-        className="tw-mt-4"
+        className=""
       >
         Next
       </Button>

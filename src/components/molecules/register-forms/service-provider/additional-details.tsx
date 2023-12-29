@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
@@ -20,6 +20,7 @@ import { SERVICE_PROVIDER_STRENGTHS } from '../../../../constants/service-provid
 import { updateAdditionalDetails } from '../../../../api-calls/service-provider/update-profile-details';
 
 import { parseError } from '../../../../utils/parse-error';
+import { useServiceProviderSignupStore } from '@/stores/serviceProvider-signup.store';
 
 const AdditionalDetailsForm = () => {
   const [selectedStrengths, setSelectedStrengths] = useState<
@@ -27,6 +28,20 @@ const AdditionalDetailsForm = () => {
   >([]);
 
   const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
+
+  const { basicDetails } = useServiceProviderSignupStore();
+
+  useEffect(() => {
+    if (!basicDetails) {
+      toast.error('Please start over! Cannot find basic details');
+      setSearchParams((params) => {
+        params.set('step', 'basic-details');
+        return params;
+      });
+      return;
+    }
+  }, [setSearchParams, basicDetails]);
 
   const handleAdditionalDetailsSubmit = async (
     data: TAdditionalDetailsSchema
