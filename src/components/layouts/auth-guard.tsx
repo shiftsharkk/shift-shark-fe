@@ -3,8 +3,9 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 import { TAuthUser } from '../../types/user';
+import { TDecodedToken } from '../../types/auth';
 
-import { TDecodedToken, getAccessToken } from '../../utils/auth';
+import { getAccessToken } from '../../utils/auth';
 
 import { useAuthStore } from '../../stores/auth.store';
 
@@ -36,7 +37,6 @@ const AuthGuard: React.FC = () => {
     }
 
     // [TODO] : handle token expiry
-    // [TODO] : update decoded token type. It ain't TAuthUser
     initAuthStore(decodedToken);
   }, [initAuthStore, navigate, role]);
 

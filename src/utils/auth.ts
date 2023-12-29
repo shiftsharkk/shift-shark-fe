@@ -1,13 +1,13 @@
+import { jwtDecode } from 'jwt-decode';
 import { LOCAL_STORAGE_KEYS } from '../constants/local-storage-keys';
-
-import { TRole } from '../types/user';
-
-export type TDecodedToken = {
-  role: TRole;
-};
 
 export const getAccessToken = () => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
+  if(!token) return null;
+
+  const decodedToken = jwtDecode(token);
+  // if(decodedToken)
+
   return token;
 };
 
