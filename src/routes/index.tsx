@@ -10,6 +10,7 @@ import Onboarding from '../components/pages/onboarding';
 import ComponentsTest from '../components/pages/compo';
 import ComingSoon from '@/components/pages/coming-soon';
 import Dashboard from '@/components/pages/dashboard';
+import Profile from '@/components/pages/profile';
 
 const Routes = () => {
   return (
@@ -25,6 +26,7 @@ const Routes = () => {
         <Route element={<AuthGuard />}>
           <Route path="/:role/dashboard" element={<Dashboard />} />
           <Route path="/:role/coming-soon" element={<ComingSoon />} />
+          <Route path="/:role/profile-settings" element={<Profile />} />
         </Route>
         {/* end of protected routes */}
       </Route>
