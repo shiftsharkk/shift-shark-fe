@@ -112,3 +112,28 @@ export const additionalDetailsSchema = z.object({
 });
 
 export type TAdditionalDetailsSchema = z.infer<typeof additionalDetailsSchema>;
+
+export const profileAdditionalDetailsSchema = z.object({
+  PAN: z
+    .string()
+    .min(10, 'PAN number must be at least 10 characters long')
+    .optional(),
+  aadharNumber: z
+    .string()
+    .length(12, 'Aadhar number must be 12 characters long')
+    .optional(),
+  photoURL: z.string().url('Invalid photo URL').optional(),
+  skills: z
+    .array(z.string())
+    .min(3, 'At least one skill is required')
+    .max(5, 'You can only select upto 5 strengths')
+    .optional(),
+  schoolName: z
+    .string()
+    .min(6, 'School name must be at least 6 characters long')
+    .optional(),
+  aboutMe: z
+    .string()
+    .min(20, 'Please describe yourself in at least 20 characters')
+    .optional(),
+});

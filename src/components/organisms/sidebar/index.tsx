@@ -12,8 +12,12 @@ import {
   SheetHeader,
   SheetTrigger,
 } from '@/components/shadcn/ui/sheet';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Sidebar = () => {
+  const { role } = useParams();
+  const navigate = useNavigate();
+
   return (
     <div className="">
       <div className="tw-hidden lg:tw-w-[264px] tw-h-full tw-bg-white tw-pt-3 lg:tw-flex tw-flex-col tw-justify-between">
@@ -37,6 +41,9 @@ const Sidebar = () => {
           <Button
             variant="outline"
             className="tw-text-base tw-bg-[#E7E7E7] tw-border tw-border-[#D6D6D6] !tw-rounded-full tw-w-10 tw-h-10 !tw-p-0"
+            onClick={() => {
+              navigate(`/${role}/profile-settings`);
+            }}
           >
             <User className="tw-w-5" />
           </Button>
@@ -78,6 +85,9 @@ const Sidebar = () => {
                 <Button
                   variant="outline"
                   className="tw-text-base tw-bg-[#E7E7E7] tw-border tw-border-[#D6D6D6] !tw-rounded-full tw-w-10 tw-h-10 !tw-p-0"
+                  onClick={() => {
+                    navigate(`/${role}/profile-settings`);
+                  }}
                 >
                   <User className="tw-w-5" />
                 </Button>
