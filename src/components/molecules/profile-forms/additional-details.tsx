@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import { useServiceProviderSignupStore } from '@/stores/serviceProvider-signup.store';
 import { TSearchInputOption } from '../search-input';
 import {
   TAdditionalDetailsSchema,
@@ -16,6 +15,7 @@ import MultiInputField from '../multi-input-field';
 import { SERVICE_PROVIDER_STRENGTHS } from '@/constants/service-provider-strengths';
 import TextArea from '@/components/atoms/text-area';
 import Button from '@/components/atoms/button';
+import { useUser } from '@/utils/hooks/use-user';
 
 const AdditionalDetailsForm = () => {
   const [selectedStrengths, setSelectedStrengths] = useState<
@@ -35,7 +35,10 @@ const AdditionalDetailsForm = () => {
     }
     console.log({ data });
   };
-  const { additionalDetails } = useServiceProviderSignupStore();
+  const { user } = useUser();
+  const additionalDetails = useMemo(() => {
+    return user?.additionalDetails;
+  }, [user]);
 
   const {
     register,
