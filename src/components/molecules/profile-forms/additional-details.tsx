@@ -15,10 +15,14 @@ import MultiInputField from '../multi-input-field';
 import { SERVICE_PROVIDER_STRENGTHS } from '@/constants/service-provider-strengths';
 import TextArea from '@/components/atoms/text-area';
 import Button from '@/components/atoms/button';
-import { useUser } from '@/utils/hooks/use-user';
 import InfoTooltip from '@/components/atoms/info-tooltip';
 
+import { useUser } from '@/utils/hooks/use-user';
+import useIsOnboardingRoute from '@/utils/hooks/use-is-onboarding-route';
+
 const AdditionalDetailsForm = () => {
+  const isOnboardingRoute = useIsOnboardingRoute();
+
   const [selectedStrengths, setSelectedStrengths] = useState<
     TSearchInputOption[]
   >([]);
@@ -49,7 +53,11 @@ const AdditionalDetailsForm = () => {
     handleSubmit,
     reset,
   } = useForm<TAdditionalDetailsSchema>({
-    resolver: zodResolver(additionalDetailsSchema),
+    resolver: zodResolver(
+      isOnboardingRoute
+        ? additionalDetailsSchema
+        : additionalDetailsSchema.omit({ PAN: true, aadharNumber: true })
+    ),
     defaultValues: {
       PAN: additionalDetails?.PAN,
       aadharNumber: additionalDetails?.aadharNumber,
@@ -105,9 +113,9 @@ const AdditionalDetailsForm = () => {
           <InfoTooltip content="Please contact us to change your PAN" />
         }
         placeholder="ABCDE1234F"
-        disabled
-        // {...register('PAN')}
-        // error={errors.PAN?.message}
+        {...register('PAN')}
+        error={errors.PAN?.message}
+        disabled={!isOnboardingRoute}
       />
       <Input
         label="Aadhar Number"
@@ -115,9 +123,9 @@ const AdditionalDetailsForm = () => {
           <InfoTooltip content="Please contact us to change your Aadhar Number" />
         }
         placeholder="123412341234"
-        disabled
-        // {...register('aadharNumber')}
-        // error={errors.aadharNumber?.message}
+        {...register('aadharNumber')}
+        error={errors.aadharNumber?.message}
+        disabled={!isOnboardingRoute}
       />
       <Input
         label="School/College Name"
