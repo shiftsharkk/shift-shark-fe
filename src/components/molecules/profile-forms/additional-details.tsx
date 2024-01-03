@@ -57,6 +57,8 @@ const AdditionalDetailsForm = () => {
     },
   });
 
+  console.log({ additionalDetails });
+
   useEffect(() => {
     setValue(
       'skills',
