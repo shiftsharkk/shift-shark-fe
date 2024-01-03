@@ -4,13 +4,14 @@ import RoleChecker from '../components/atoms/role-checkoer';
 
 import AuthGuard from '../components/layouts/auth-guard';
 
-import Root from '../components/pages/root';
-import Login from '../components/pages/login';
-import Onboarding from '../components/pages/onboarding';
-import ComponentsTest from '../components/pages/compo';
+import Root from '@/components/pages/root';
+import Login from '@/components/pages/login';
+import Onboarding from '@/components/pages/onboarding';
+import ComponentsTest from '@/components/pages/compo';
 import ComingSoon from '@/components/pages/coming-soon';
 import Dashboard from '@/components/pages/dashboard';
 import Profile from '@/components/pages/profile';
+import LoggedInAuthRouteGuard from '@/components/layouts/logged-in-auth-route-guard';
 
 const Routes = () => {
   return (
@@ -20,7 +21,10 @@ const Routes = () => {
 
       {/* role checked routes */}
       <Route element={<RoleChecker />}>
-        <Route path="/:role/auth" element={<Login />} />
+        {/* auth routes */}
+        <Route element={<LoggedInAuthRouteGuard />}>
+          <Route path="/:role/auth" element={<Login />} />
+        </Route>
         <Route path="/:role/onboarding" element={<Onboarding />} />
         {/* protected routes */}
         <Route element={<AuthGuard />}>
