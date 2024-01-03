@@ -16,6 +16,7 @@ import { SERVICE_PROVIDER_STRENGTHS } from '@/constants/service-provider-strengt
 import TextArea from '@/components/atoms/text-area';
 import Button from '@/components/atoms/button';
 import { useUser } from '@/utils/hooks/use-user';
+import InfoTooltip from '@/components/atoms/info-tooltip';
 
 const AdditionalDetailsForm = () => {
   const [selectedStrengths, setSelectedStrengths] = useState<
@@ -46,6 +47,7 @@ const AdditionalDetailsForm = () => {
     setValue,
     setError,
     handleSubmit,
+    reset,
   } = useForm<TAdditionalDetailsSchema>({
     resolver: zodResolver(additionalDetailsSchema),
     defaultValues: {
@@ -56,6 +58,25 @@ const AdditionalDetailsForm = () => {
       aboutMe: additionalDetails?.aboutMe,
     },
   });
+
+  useEffect(() => {
+    reset({
+      PAN: additionalDetails?.PAN,
+      aadharNumber: additionalDetails?.aadharNumber,
+      schoolName: additionalDetails?.schoolName,
+      skills: additionalDetails?.skills,
+      aboutMe: additionalDetails?.aboutMe,
+    });
+    if (additionalDetails?.skills) {
+      const skillsArray = additionalDetails.skills.map(
+        (skill: string) =>
+          SERVICE_PROVIDER_STRENGTHS.find(
+            (strength) => strength.value === skill
+          )!
+      );
+      setSelectedStrengths(skillsArray);
+    }
+  }, [additionalDetails, reset]);
 
   useEffect(() => {
     setValue(
@@ -80,15 +101,23 @@ const AdditionalDetailsForm = () => {
     >
       <Input
         label="PAN"
+        labelSuffixElement={
+          <InfoTooltip content="Please contact us to change your PAN" />
+        }
         placeholder="ABCDE1234F"
-        {...register('PAN')}
-        error={errors.PAN?.message}
+        disabled
+        // {...register('PAN')}
+        // error={errors.PAN?.message}
       />
       <Input
         label="Aadhar Number"
+        labelSuffixElement={
+          <InfoTooltip content="Please contact us to change your Aadhar Number" />
+        }
         placeholder="123412341234"
-        {...register('aadharNumber')}
-        error={errors.aadharNumber?.message}
+        disabled
+        // {...register('aadharNumber')}
+        // error={errors.aadharNumber?.message}
       />
       <Input
         label="School/College Name"

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
@@ -10,12 +10,14 @@ import { useAuthStore } from '../../stores/auth.store';
 import { TDecodedToken } from '@/types/auth';
 import { getUser } from '@/api-calls/user';
 import { useUserStore } from '@/stores/user.store';
+import Loader from '../molecules/Loader';
 
 const AuthGuard: React.FC = () => {
   const navigate = useNavigate();
   const { role } = useParams();
   const makeApiCall = useRef(false);
   const { setUser } = useUserStore();
+  const [isLoading, setIsLoading] = useState(true);
 
   const setAuthUser = useAuthStore((state) => state.setUser);
 
@@ -29,6 +31,7 @@ const AuthGuard: React.FC = () => {
   useEffect(() => {
     const storeUser = async () => {
       try {
+        setIsLoading(true);
         const res = await getUser();
         if (res.data) {
           setUser(res.data.user);
@@ -36,13 +39,15 @@ const AuthGuard: React.FC = () => {
         }
       } catch (error) {
         navigate(`/${role}/auth?redirect=no-token`);
+      } finally {
+        setIsLoading(false);
       }
     };
     if (makeApiCall.current) {
       storeUser();
     }
     makeApiCall.current = true;
-  }, []);
+  }, [navigate, role, setUser]);
 
   useEffect(() => {
     const token = getAccessToken();
@@ -62,6 +67,10 @@ const AuthGuard: React.FC = () => {
     // [TODO] : update decoded token type. It ain't TAuthUser
     initAuthStore(decodedToken);
   }, [initAuthStore, navigate, role]);
+
+  if (isLoading) {
+    <Loader />;
+  }
 
   return <Outlet />;
 };

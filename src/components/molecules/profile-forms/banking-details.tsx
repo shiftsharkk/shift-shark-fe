@@ -10,7 +10,7 @@ import {
 } from '@/validations/profile';
 import { updateBankDetails } from '@/api-calls/service-provider/update-profile-details';
 import { parseError } from '@/utils/parse-error';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useUser } from '@/utils/hooks/use-user';
 
 const BankingDetailsForm = () => {
@@ -22,6 +22,7 @@ const BankingDetailsForm = () => {
     register,
     formState: { errors, isSubmitting },
     handleSubmit,
+    reset,
   } = useForm<TBankingDetailsSchema>({
     resolver: zodResolver(bankingDetailsSchema),
     defaultValues: {
@@ -32,6 +33,16 @@ const BankingDetailsForm = () => {
       bankName: bankDetails?.bankName,
     },
   });
+
+  useEffect(() => {
+    reset({
+      accountNumber: bankDetails?.accountNumber,
+      confirmAccountNumber: bankDetails?.accountNumber,
+      ifscCode: bankDetails?.ifscCode,
+      accountHolderName: bankDetails?.accountHolderName,
+      bankName: bankDetails?.bankName,
+    });
+  }, [bankDetails, reset]);
 
   const handleBankingDetailsSubmit = async (data: TBankingDetailsSchema) => {
     try {
