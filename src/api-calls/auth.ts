@@ -1,6 +1,7 @@
 import axios from './axios-instance';
 
 import { TApiResponse } from '../types/api';
+import { parseError } from '@/utils/parse-error';
 
 type TGetOtpResponse = {
   data: {
@@ -54,7 +55,14 @@ export const verifyOTP = async (
   return response.data;
 };
 
-export const refreshToken = async (): Promise<TVerifyOtpResponse> => {
-  const response = await axios.post('/auth/refresh-token');
-  return response.data;
-};
+export const refreshToken =
+  async (): Promise<TApiResponse<TExistingUserVerifyResponse> | null> => {
+    try {
+      const response = await axios.post('/auth/refresh-token');
+      return response.data;
+    } catch (error) {
+      const errorMessage = parseError(error);
+      console.error(errorMessage);
+      return null;
+    }
+  };

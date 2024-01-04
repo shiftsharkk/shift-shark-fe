@@ -59,6 +59,8 @@ const AdditionalDetailsForm = () => {
     },
   });
 
+  console.log({ additionalDetails });
+
   useEffect(() => {
     reset({
       PAN: additionalDetails?.PAN,

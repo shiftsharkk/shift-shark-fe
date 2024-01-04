@@ -62,9 +62,6 @@ const AuthGuard: React.FC = () => {
       navigate(`/${role}/auth?redirect=forbidden`);
       return;
     }
-
-    // [TODO] : handle token expiry
-    // [TODO] : update decoded token type. It ain't TAuthUser
     initAuthStore(decodedToken);
   }, [initAuthStore, navigate, role]);
 
