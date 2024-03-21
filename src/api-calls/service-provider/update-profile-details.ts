@@ -10,7 +10,7 @@ import { TApiResponse } from '../../types/api';
 type TUpdateBankDetailsRequest = TServiceProviderBankDetails;
 type TUpdateAdditionalDetailsRequest = TAdditionalServiceProviderData;
 
-const updateBankDetails = async (data: TUpdateBankDetailsRequest) => {
+export const updateBankDetails = async (data: TUpdateBankDetailsRequest) => {
   const response = await axios.put('/service-provider/bank-details', data);
   return response.data;
 };
@@ -21,7 +21,7 @@ export const useUpdateBankDetails = () => {
   });
 };
 
-const updateAdditionalDetails = async (
+export const updateAdditionalDetails = async (
   data: TUpdateAdditionalDetailsRequest
 ) => {
   const response = await axios.put(
