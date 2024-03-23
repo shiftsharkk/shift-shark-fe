@@ -1,4 +1,5 @@
 import axios from '../axios-instance';
+import { useMutation } from '@tanstack/react-query';
 
 import {
   TAdditionalServiceProviderData,
@@ -7,22 +8,31 @@ import {
 import { TApiResponse } from '../../types/api';
 
 type TUpdateBankDetailsRequest = TServiceProviderBankDetails;
+type TUpdateAdditionalDetailsRequest = TAdditionalServiceProviderData;
 
-export const updateBankDetails = async (
-  data: TUpdateBankDetailsRequest
-): Promise<TApiResponse> => {
+export const updateBankDetails = async (data: TUpdateBankDetailsRequest) => {
   const response = await axios.put('/service-provider/bank-details', data);
   return response.data;
 };
 
-type TUpdateAdditionalDetailsRequest = TAdditionalServiceProviderData;
+export const useUpdateBankDetails = () => {
+  return useMutation<TApiResponse, Error, TUpdateBankDetailsRequest>({
+    mutationFn: updateBankDetails,
+  });
+};
 
 export const updateAdditionalDetails = async (
   data: TUpdateAdditionalDetailsRequest
-): Promise<TApiResponse> => {
+) => {
   const response = await axios.put(
     '/service-provider/additional-details',
     data
   );
   return response.data;
+};
+
+export const useUpdateAdditionalDetails = () => {
+  return useMutation<TApiResponse, Error, TUpdateAdditionalDetailsRequest>({
+    mutationFn: updateAdditionalDetails,
+  });
 };
