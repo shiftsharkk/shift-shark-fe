@@ -25,9 +25,6 @@ const Sidebar = () => {
       <div className="tw-hidden lg:tw-w-[264px] tw-h-full tw-bg-white tw-pt-3 lg:tw-flex tw-flex-col tw-justify-between">
         <div className=" tw-grid tw-gap-5">
           <img src={logo} alt="shift shark logo" className="tw-mb-10 tw-mt-3" />
-          {/* <Skeleton className="tw-h-8 tw-w-full" />
-          <Skeleton className="tw-h-8 tw-w-full" />
-          <Skeleton className="tw-h-8 tw-w-full" /> */}
           {SIDEBAR_NAVS.map(
             (nav: { link: string; icon: string; title: string }) => (
               <NavLink
